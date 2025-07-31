@@ -1,0 +1,8 @@
+<!-- src/ultrasonic_sensor/launch/with.launch -->
+<launch>
+    <!-- 启动 rov_planning 模块 -->
+    <include file="$(find rov_planning)/launch/rov_planning.launch" />
+    
+    <!-- 启动 ultrasonic_sensor 节点 -->
+    <node name="ultrasonic_sensor" pkg="ultrasonic_sensor" type="ultrasonic_sensor_node" output="screen" />
+</launch>

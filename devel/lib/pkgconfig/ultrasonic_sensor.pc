@@ -1,0 +1,1 @@
+/home/ros/Code/devel/.private/ultrasonic_sensor/lib/pkgconfig/ultrasonic_sensor.pc

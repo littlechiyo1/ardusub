@@ -1,0 +1,8 @@
+prefix=/home/ros/Code/install
+
+Name: ultrasonic_sensor
+Description: Description of ultrasonic_sensor
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: roscpp sensor_msgs
