@@ -22,8 +22,6 @@
 #include "ros/ros.h"                         
 #include "application_impl.h"
 
-
-
 int main(int argc, char* argv[]) {
     
     ros::init(argc, argv, "rov_planning");  

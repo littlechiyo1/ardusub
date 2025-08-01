@@ -1,0 +1,31 @@
+[  0%] Built target rosgraph_msgs_generate_messages_eus
+[  0%] Built target roscpp_generate_messages_nodejs
+[  0%] Built target rosgraph_msgs_generate_messages_cpp
+[  0%] Built target geometry_msgs_generate_messages_eus
+[  0%] Built target std_msgs_generate_messages_eus
+[  0%] Built target sensor_msgs_generate_messages_py
+[  0%] Built target geometry_msgs_generate_messages_py
+[  0%] Built target geometry_msgs_generate_messages_lisp
+[  0%] Built target sensor_msgs_generate_messages_lisp
+[  0%] Built target geometry_msgs_generate_messages_cpp
+[  0%] Built target geometry_msgs_generate_messages_nodejs
+[  0%] Built target roscpp_generate_messages_eus
+[  0%] Built target sensor_msgs_generate_messages_nodejs
+[  0%] Built target roscpp_generate_messages_py
+[  0%] Built target roscpp_generate_messages_cpp
+[  0%] Built target sensor_msgs_generate_messages_eus
+[  0%] Built target rosgraph_msgs_generate_messages_py
+[  0%] Built target rosgraph_msgs_generate_messages_lisp
+[  0%] Built target std_msgs_generate_messages_lisp
+[  0%] Built target roscpp_generate_messages_lisp
+[  0%] Built target rosgraph_msgs_generate_messages_nodejs
+[  0%] Built target std_msgs_generate_messages_cpp
+[  0%] Built target std_msgs_generate_messages_py
+[  0%] Built target sensor_msgs_generate_messages_cpp
+[  0%] Built target std_msgs_generate_messages_nodejs
+[35m[1mScanning dependencies of target ultrasonic_sensor_lib[0m
+[ 20%] [32mBuilding CXX object CMakeFiles/ultrasonic_sensor_lib.dir/src/ultrasonic/src/ultrasonic_sensor_node.cpp.o[0m
+[ 40%] [32m[1mLinking CXX shared library /home/ros/Code/devel/.private/ultrasonic_sensor/lib/libultrasonic_sensor_lib.so[0m
+[ 60%] Built target ultrasonic_sensor_lib
+[ 80%] [32m[1mLinking CXX executable /home/ros/Code/devel/.private/ultrasonic_sensor/lib/ultrasonic_sensor/ultrasonic_sensor_node[0m
+[100%] Built target ultrasonic_sensor_node

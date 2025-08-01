@@ -13,4 +13,4 @@ export PKG_CONFIG_PATH='/opt/ros/noetic/lib/pkgconfig'
 export PWD='/home/ros/Code/build/catkin_tools_prebuild'
 export PYTHONPATH='/opt/ros/noetic/lib/python3/dist-packages'
 export ROSLISP_PACKAGE_DIRECTORIES="/home/ros/Code/devel/.private/catkin_tools_prebuild/share/common-lisp:$ROSLISP_PACKAGE_DIRECTORIES"
-export ROS_PACKAGE_PATH='/home/ros/Code/build/catkin_tools_prebuild:/home/ros/Code/src/ultrasonic_sensor:/opt/ros/noetic/share'
+export ROS_PACKAGE_PATH="/home/ros/Code/build/catkin_tools_prebuild:$ROS_PACKAGE_PATH"

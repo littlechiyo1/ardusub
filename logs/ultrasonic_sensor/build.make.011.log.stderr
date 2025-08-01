@@ -1,0 +1,149 @@
+[01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:[m[K In constructor ‘[01m[KMQTT::Mqtt_imp::Mqtt_imp(const char*)[m[K’:
+[01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:28:27:[m[K [01;35m[Kwarning: [m[K‘[01m[Kmosqpp::mosquittopp::mosquittopp(const char*, bool)[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+   28 |       pad_connected_(false[01;35m[K)[m[K {}
+      |                           [01;35m[K^[m[K
+In file included from [01m[K/home/ros/Code/src/ultrasonic_sensor/../rov_planning/src/mqtt/include/mqtt.h:46[m[K,
+                 from [01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:21[m[K:
+[01m[K/usr/include/mosquittopp.h:94:14:[m[K [01;36m[Knote: [m[Kdeclared here
+   94 |   DEPRECATED [01;36m[Kmosquittopp[m[K(const char *id=NULL, bool clean_session=true);
+      |              [01;36m[K^~~~~~~~~~~[m[K
+[01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:[m[K In constructor ‘[01m[KMQTT::Mqtt_imp::Mqtt_imp(const char*, bool)[m[K’:
+[01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:34:27:[m[K [01;35m[Kwarning: [m[K‘[01m[Kmosqpp::mosquittopp::mosquittopp(const char*, bool)[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+   34 |       pad_connected_(false[01;35m[K)[m[K {
+      |                           [01;35m[K^[m[K
+In file included from [01m[K/home/ros/Code/src/ultrasonic_sensor/../rov_planning/src/mqtt/include/mqtt.h:46[m[K,
+                 from [01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:21[m[K:
+[01m[K/usr/include/mosquittopp.h:94:14:[m[K [01;36m[Knote: [m[Kdeclared here
+   94 |   DEPRECATED [01;36m[Kmosquittopp[m[K(const char *id=NULL, bool clean_session=true);
+      |              [01;36m[K^~~~~~~~~~~[m[K
+[01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:[m[K In member function ‘[01m[Kbool MQTT::Mqtt_imp::init()[m[K’:
+[01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:46:22:[m[K [01;35m[Kwarning: [m[K‘[01m[Kint mosqpp::mosquittopp::will_set(const char*, int, const void*, int, bool)[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+   46 |     will_set(WILL_MSG[01;35m[K)[m[K;
+      |                      [01;35m[K^[m[K
+In file included from [01m[K/home/ros/Code/src/ultrasonic_sensor/../rov_planning/src/mqtt/include/mqtt.h:46[m[K,
+                 from [01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:21[m[K:
+[01m[K/usr/include/mosquittopp.h:99:18:[m[K [01;36m[Knote: [m[Kdeclared here
+   99 |   int DEPRECATED [01;36m[Kwill_set[m[K(const char *topic, int payloadlen=0, const void *payload=NULL, int qos=0, bool retain=false);
+      |                  [01;36m[K^~~~~~~~[m[K
+[01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:[m[K In member function ‘[01m[Kvirtual void MQTT::Mqtt_imp::on_message(const mosquitto_message*)[m[K’:
+[01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:118:17:[m[K [01;35m[Kwarning: [m[K‘[01m[Kint mosqpp::topic_matches_sub(const char*, const char*, bool*)[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+  118 |         mosqpp::[01;35m[Ktopic_matches_sub[m[K(temp.first.c_str(), message->topic, &res);
+      |                 [01;35m[K^~~~~~~~~~~~~~~~~[m[K
+In file included from [01m[K/home/ros/Code/src/ultrasonic_sensor/../rov_planning/src/mqtt/include/mqtt.h:46[m[K,
+                 from [01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:21[m[K:
+[01m[K/usr/include/mosquittopp.h:50:30:[m[K [01;36m[Knote: [m[Kdeclared here
+   50 | mosqpp_EXPORT int DEPRECATED [01;36m[Ktopic_matches_sub[m[K(const char *sub, const char *topic, bool *result);
+      |                              [01;36m[K^~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:118:75:[m[K [01;35m[Kwarning: [m[K‘[01m[Kint mosqpp::topic_matches_sub(const char*, const char*, bool*)[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+  118 |         mosqpp::topic_matches_sub(temp.first.c_str(), message->topic, &res[01;35m[K)[m[K;
+      |                                                                           [01;35m[K^[m[K
+In file included from [01m[K/home/ros/Code/src/ultrasonic_sensor/../rov_planning/src/mqtt/include/mqtt.h:46[m[K,
+                 from [01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:21[m[K:
+[01m[K/usr/include/mosquittopp.h:50:30:[m[K [01;36m[Knote: [m[Kdeclared here
+   50 | mosqpp_EXPORT int DEPRECATED [01;36m[Ktopic_matches_sub[m[K(const char *sub, const char *topic, bool *result);
+      |                              [01;36m[K^~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:118:75:[m[K [01;35m[Kwarning: [m[K‘[01m[Kint mosqpp::topic_matches_sub(const char*, const char*, bool*)[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+  118 |         mosqpp::topic_matches_sub(temp.first.c_str(), message->topic, &res[01;35m[K)[m[K;
+      |                                                                           [01;35m[K^[m[K
+In file included from [01m[K/home/ros/Code/src/ultrasonic_sensor/../rov_planning/src/mqtt/include/mqtt.h:46[m[K,
+                 from [01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:21[m[K:
+[01m[K/usr/include/mosquittopp.h:50:30:[m[K [01;36m[Knote: [m[Kdeclared here
+   50 | mosqpp_EXPORT int DEPRECATED [01;36m[Ktopic_matches_sub[m[K(const char *sub, const char *topic, bool *result);
+      |                              [01;36m[K^~~~~~~~~~~~~~~~~[m[K
+[01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:[m[K In member function ‘[01m[Kvoid MQTT::Mqtt_imp::ConnectMqttBroker()[m[K’:
+[01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:181:49:[m[K [01;35m[Kwarning: [m[K‘[01m[Kint mosqpp::mosquittopp::connect(const char*, int, int)[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+  181 |     int rc = connect(SERVER_IP,PORT,  KEEP_ALIVE[01;35m[K)[m[K;
+      |                                                 [01;35m[K^[m[K
+In file included from [01m[K/home/ros/Code/src/ultrasonic_sensor/../rov_planning/src/mqtt/include/mqtt.h:46[m[K,
+                 from [01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:21[m[K:
+[01m[K/usr/include/mosquittopp.h:102:18:[m[K [01;36m[Knote: [m[Kdeclared here
+  102 |   int DEPRECATED [01;36m[Kconnect[m[K(const char *host, int port=1883, int keepalive=60);
+      |                  [01;36m[K^~~~~~~[m[K
+[01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:187:49:[m[K [01;35m[Kwarning: [m[K‘[01m[Kint mosqpp::mosquittopp::connect(const char*, int, int)[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+  187 |         rc = connect(SERVER_IP,PORT,  KEEP_ALIVE[01;35m[K)[m[K;
+      |                                                 [01;35m[K^[m[K
+In file included from [01m[K/home/ros/Code/src/ultrasonic_sensor/../rov_planning/src/mqtt/include/mqtt.h:46[m[K,
+                 from [01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:21[m[K:
+[01m[K/usr/include/mosquittopp.h:102:18:[m[K [01;36m[Knote: [m[Kdeclared here
+  102 |   int DEPRECATED [01;36m[Kconnect[m[K(const char *host, int port=1883, int keepalive=60);
+      |                  [01;36m[K^~~~~~~[m[K
+[01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:191:44:[m[K [01;35m[Kwarning: [m[K‘[01m[Kint mosqpp::mosquittopp::subscribe(int*, const char*, int)[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+  191 |         subscribe(nullptr, "SPAD/RCControl"[01;35m[K)[m[K;
+      |                                            [01;35m[K^[m[K
+In file included from [01m[K/home/ros/Code/src/ultrasonic_sensor/../rov_planning/src/mqtt/include/mqtt.h:46[m[K,
+                 from [01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:21[m[K:
+[01m[K/usr/include/mosquittopp.h:110:18:[m[K [01;36m[Knote: [m[Kdeclared here
+  110 |   int DEPRECATED [01;36m[Ksubscribe[m[K(int *mid, const char *sub, int qos=0);
+      |                  [01;36m[K^~~~~~~~~[m[K
+[01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:192:46:[m[K [01;35m[Kwarning: [m[K‘[01m[Kint mosqpp::mosquittopp::subscribe(int*, const char*, int)[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+  192 |         subscribe(nullptr, "SPAD/ModeControl"[01;35m[K)[m[K;
+      |                                              [01;35m[K^[m[K
+In file included from [01m[K/home/ros/Code/src/ultrasonic_sensor/../rov_planning/src/mqtt/include/mqtt.h:46[m[K,
+                 from [01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:21[m[K:
+[01m[K/usr/include/mosquittopp.h:110:18:[m[K [01;36m[Knote: [m[Kdeclared here
+  110 |   int DEPRECATED [01;36m[Ksubscribe[m[K(int *mid, const char *sub, int qos=0);
+      |                  [01;36m[K^~~~~~~~~[m[K
+[01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:193:47:[m[K [01;35m[Kwarning: [m[K‘[01m[Kint mosqpp::mosquittopp::subscribe(int*, const char*, int)[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+  193 |         subscribe(nullptr, "SPAD/ArmedControl"[01;35m[K)[m[K;
+      |                                               [01;35m[K^[m[K
+In file included from [01m[K/home/ros/Code/src/ultrasonic_sensor/../rov_planning/src/mqtt/include/mqtt.h:46[m[K,
+                 from [01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:21[m[K:
+[01m[K/usr/include/mosquittopp.h:110:18:[m[K [01;36m[Knote: [m[Kdeclared here
+  110 |   int DEPRECATED [01;36m[Ksubscribe[m[K(int *mid, const char *sub, int qos=0);
+      |                  [01;36m[K^~~~~~~~~[m[K
+[01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:194:44:[m[K [01;35m[Kwarning: [m[K‘[01m[Kint mosqpp::mosquittopp::subscribe(int*, const char*, int)[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+  194 |         subscribe(nullptr, "SPAD/Heartbeat"[01;35m[K)[m[K;
+      |                                            [01;35m[K^[m[K
+In file included from [01m[K/home/ros/Code/src/ultrasonic_sensor/../rov_planning/src/mqtt/include/mqtt.h:46[m[K,
+                 from [01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:21[m[K:
+[01m[K/usr/include/mosquittopp.h:110:18:[m[K [01;36m[Knote: [m[Kdeclared here
+  110 |   int DEPRECATED [01;36m[Ksubscribe[m[K(int *mid, const char *sub, int qos=0);
+      |                  [01;36m[K^~~~~~~~~[m[K
+[01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:196:20:[m[K [01;35m[Kwarning: [m[K‘[01m[Kint mosqpp::mosquittopp::loop_start()[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+  196 |         loop_start([01;35m[K)[m[K;
+      |                    [01;35m[K^[m[K
+In file included from [01m[K/home/ros/Code/src/ultrasonic_sensor/../rov_planning/src/mqtt/include/mqtt.h:46[m[K,
+                 from [01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:21[m[K:
+[01m[K/usr/include/mosquittopp.h:127:18:[m[K [01;36m[Knote: [m[Kdeclared here
+  127 |   int DEPRECATED [01;36m[Kloop_start[m[K();
+      |                  [01;36m[K^~~~~~~~~~[m[K
+[01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:[m[K In member function ‘[01m[Kvoid MQTT::Mqtt_imp::SetState(const ModeStatus&)[m[K’:
+[01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:298:57:[m[K [01;35m[Kwarning: [m[K‘[01m[Kint mosqpp::mosquittopp::publish(int*, const char*, int, const void*, int, bool)[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+  298 |     publish(nullptr, topic, result.size(), result.data()[01;35m[K)[m[K;
+      |                                                         [01;35m[K^[m[K
+In file included from [01m[K/home/ros/Code/src/ultrasonic_sensor/../rov_planning/src/mqtt/include/mqtt.h:46[m[K,
+                 from [01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:21[m[K:
+[01m[K/usr/include/mosquittopp.h:109:18:[m[K [01;36m[Knote: [m[Kdeclared here
+  109 |   int DEPRECATED [01;36m[Kpublish[m[K(int *mid, const char *topic, int payloadlen=0, const void *payload=NULL, int qos=0, bool retain=false);
+      |                  [01;36m[K^~~~~~~[m[K
+[01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:[m[K In member function ‘[01m[Kvoid MQTT::Mqtt_imp::SetRCOut(const std::vector<int>&)[m[K’:
+[01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:325:54:[m[K [01;35m[Kwarning: [m[K‘[01m[Kint mosqpp::mosquittopp::publish(int*, const char*, int, const void*, int, bool)[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+  325 |     publish(nullptr,topic,result.size(),result.data()[01;35m[K)[m[K;
+      |                                                      [01;35m[K^[m[K
+In file included from [01m[K/home/ros/Code/src/ultrasonic_sensor/../rov_planning/src/mqtt/include/mqtt.h:46[m[K,
+                 from [01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:21[m[K:
+[01m[K/usr/include/mosquittopp.h:109:18:[m[K [01;36m[Knote: [m[Kdeclared here
+  109 |   int DEPRECATED [01;36m[Kpublish[m[K(int *mid, const char *topic, int payloadlen=0, const void *payload=NULL, int qos=0, bool retain=false);
+      |                  [01;36m[K^~~~~~~[m[K
+[01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:[m[K In member function ‘[01m[Kvoid MQTT::Mqtt_imp::SetUltrasonicData(uint16_t)[m[K’:
+[01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:341:78:[m[K [01;35m[Kwarning: [m[K‘[01m[Kint mosqpp::mosquittopp::publish(int*, const char*, int, const void*, int, bool)[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+  341 |     int rc = publish(nullptr, "MACH/Ultrasonic", result.size(), result.data()[01;35m[K)[m[K;
+      |                                                                              [01;35m[K^[m[K
+In file included from [01m[K/home/ros/Code/src/ultrasonic_sensor/../rov_planning/src/mqtt/include/mqtt.h:46[m[K,
+                 from [01m[K/home/ros/Code/src/rov_planning/src/mqtt/src/mqtt.cpp:21[m[K:
+[01m[K/usr/include/mosquittopp.h:109:18:[m[K [01;36m[Knote: [m[Kdeclared here
+  109 |   int DEPRECATED [01;36m[Kpublish[m[K(int *mid, const char *topic, int payloadlen=0, const void *payload=NULL, int qos=0, bool retain=false);
+      |                  [01;36m[K^~~~~~~[m[K
+[01m[K/home/ros/Code/src/ultrasonic_sensor/src/ultrasonic/src/ultrasonic_sensor_node.cpp:[m[K In member function ‘[01m[Kbool ultrasonic_sensor::ultrasonic::UltrasonicSensorNode::Init()[m[K’:
+[01m[K/home/ros/Code/src/ultrasonic_sensor/src/ultrasonic/src/ultrasonic_sensor_node.cpp:34:65:[m[K [01;31m[Kerror: [m[K‘[01m[KMQTT::Mqtt_imp::Mqtt_imp(const char*, bool)[m[K’ is private within this context
+   34 |     mqtt_client_ = new MQTT::Mqtt_imp("ultrasonic_sensor", false[01;31m[K)[m[K;
+      |                                                                 [01;31m[K^[m[K
+In file included from [01m[K/home/ros/Code/src/ultrasonic_sensor/src/ultrasonic/include/ultrasonic_sensor_node.h:8[m[K,
+                 from [01m[K/home/ros/Code/src/ultrasonic_sensor/src/ultrasonic/src/ultrasonic_sensor_node.cpp:1[m[K:
+[01m[K/home/ros/Code/src/ultrasonic_sensor/../rov_planning/src/mqtt/include/mqtt.h:87:5:[m[K [01;36m[Knote: [m[Kdeclared private here
+   87 |     [01;36m[KMqtt_imp[m[K(const char *id, bool is_singleton);
+      |     [01;36m[K^~~~~~~~[m[K
+make[2]: *** [CMakeFiles/ultrasonic_sensor_lib.dir/build.make:63：CMakeFiles/ultrasonic_sensor_lib.dir/src/ultrasonic/src/ultrasonic_sensor_node.cpp.o] 错误 1
+make[2]: *** 正在等待未完成的任务....
+make[1]: *** [CMakeFiles/Makefile2:972：CMakeFiles/ultrasonic_sensor_lib.dir/all] 错误 2
+make: *** [Makefile:141：all] 错误 2

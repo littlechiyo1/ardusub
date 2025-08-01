@@ -1,0 +1,41 @@
+[  0%] Built target geometry_msgs_generate_messages_eus
+[  0%] Built target roscpp_generate_messages_nodejs
+[  0%] Built target std_msgs_generate_messages_eus
+[  0%] Built target rosgraph_msgs_generate_messages_eus
+[  0%] Built target geometry_msgs_generate_messages_py
+[  0%] Built target rosgraph_msgs_generate_messages_cpp
+[  0%] Built target geometry_msgs_generate_messages_lisp
+[  0%] Built target sensor_msgs_generate_messages_py
+[  0%] Built target geometry_msgs_generate_messages_nodejs
+[  0%] Built target sensor_msgs_generate_messages_nodejs
+[  0%] Built target roscpp_generate_messages_eus
+[  0%] Built target geometry_msgs_generate_messages_cpp
+[  0%] Built target roscpp_generate_messages_py
+[  0%] Built target sensor_msgs_generate_messages_lisp
+[  0%] Built target sensor_msgs_generate_messages_eus
+[  0%] Built target roscpp_generate_messages_cpp
+[  0%] Built target std_msgs_generate_messages_lisp
+[  0%] Built target roscpp_generate_messages_lisp
+[  0%] Built target rosgraph_msgs_generate_messages_lisp
+[  0%] Built target rosgraph_msgs_generate_messages_py
+[  0%] Built target std_msgs_generate_messages_py
+[  0%] Built target std_msgs_generate_messages_cpp
+[  0%] Built target rosgraph_msgs_generate_messages_nodejs
+[  0%] Built target sensor_msgs_generate_messages_cpp
+[  0%] Built target std_msgs_generate_messages_nodejs
+[35m[1mScanning dependencies of target ultrasonic_sensor_lib[0m
+[ 20%] [32mBuilding CXX object CMakeFiles/ultrasonic_sensor_lib.dir/src/ultrasonic/src/ultrasonic_sensor_node.cpp.o[0m
+[01m[K/home/ros/Code/src/ultrasonic_sensor/src/ultrasonic/src/ultrasonic_sensor_node.cpp:[m[K In member function ‘[01m[Kvoid ultrasonic_sensor::ultrasonic::UltrasonicSensorNode::ProcessSensorData()[m[K’:
+[01m[K/home/ros/Code/src/ultrasonic_sensor/src/ultrasonic/src/ultrasonic_sensor_node.cpp:107:64:[m[K [01;31m[Kerror: [m[Kcannot convert ‘[01m[Kstd_msgs::UInt16[m[K’ {aka ‘[01m[Kstd_msgs::UInt16_<std::allocator<void> >[m[K’} to ‘[01m[Kuint16_t[m[K’ {aka ‘[01m[Kshort unsigned int[m[K’}
+  107 |                 MQTT::Mqtt_imp::get_single().SetUltrasonicData([01;31m[Kdistance_msg[m[K);   // Mqtt
+      |                                                                [01;31m[K^~~~~~~~~~~~[m[K
+      |                                                                [01;31m[K|[m[K
+      |                                                                [01;31m[Kstd_msgs::UInt16 {aka std_msgs::UInt16_<std::allocator<void> >}[m[K
+In file included from [01m[K/home/ros/Code/src/ultrasonic_sensor/src/ultrasonic/include/ultrasonic_sensor_node.h:8[m[K,
+                 from [01m[K/home/ros/Code/src/ultrasonic_sensor/src/ultrasonic/src/ultrasonic_sensor_node.cpp:1[m[K:
+[01m[K/home/ros/Code/src/ultrasonic_sensor/../rov_planning/src/mqtt/include/mqtt.h:77:37:[m[K [01;36m[Knote: [m[K  initializing argument 1 of ‘[01m[Kvoid MQTT::Mqtt_imp::SetUltrasonicData(uint16_t)[m[K’
+   77 |     void SetUltrasonicData([01;36m[Kuint16_t distance[m[K);
+      |                            [01;36m[K~~~~~~~~~^~~~~~~~[m[K
+make[2]: *** [CMakeFiles/ultrasonic_sensor_lib.dir/build.make:63：CMakeFiles/ultrasonic_sensor_lib.dir/src/ultrasonic/src/ultrasonic_sensor_node.cpp.o] 错误 1
+make[1]: *** [CMakeFiles/Makefile2:972：CMakeFiles/ultrasonic_sensor_lib.dir/all] 错误 2
+make: *** [Makefile:141：all] 错误 2

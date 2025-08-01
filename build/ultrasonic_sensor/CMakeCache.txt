@@ -346,8 +346,14 @@ LSB_FOUND:BOOL=TRUE
 //Path to a program.
 LSB_RELEASE_EXECUTABLE:FILEPATH=/usr/bin/lsb_release
 
+//Path to a library.
+MOSQPP_LIBRARIES:FILEPATH=/usr/lib/x86_64-linux-gnu/libmosquittopp.so
+
 //Path to a program.
 NOSETESTS:FILEPATH=/usr/bin/nosetests3
+
+//pkg-config executable
+PKG_CONFIG_EXECUTABLE:FILEPATH=/usr/bin/pkg-config
 
 //Path to a program.
 PYTHON_EXECUTABLE:FILEPATH=/usr/bin/python3
@@ -390,6 +396,9 @@ catkin_DIR:PATH=/opt/ros/noetic/share/catkin/cmake
 
 //The directory containing a CMake configuration file for cpp_common.
 cpp_common_DIR:PATH=/opt/ros/noetic/share/cpp_common/cmake
+
+//The directory containing a CMake configuration file for geographic_msgs.
+geographic_msgs_DIR:PATH=/opt/ros/noetic/share/geographic_msgs/cmake
 
 //The directory containing a CMake configuration file for geometry_msgs.
 geometry_msgs_DIR:PATH=/opt/ros/noetic/share/geometry_msgs/cmake
@@ -443,8 +452,14 @@ gtest_main_LIB_DEPENDS:STATIC=general;gtest;
 //Path to a library.
 lib:FILEPATH=/opt/ros/noetic/lib/libserial.so
 
+//The directory containing a CMake configuration file for mavros_msgs.
+mavros_msgs_DIR:PATH=/home/ros/Code/devel/share/mavros_msgs/cmake
+
 //The directory containing a CMake configuration file for message_runtime.
 message_runtime_DIR:PATH=/opt/ros/noetic/share/message_runtime/cmake
+
+//Path to a library.
+pkgcfg_lib_MOSQUITTO_mosquitto:FILEPATH=/usr/lib/x86_64-linux-gnu/libmosquitto.so
 
 //The directory containing a CMake configuration file for rosconsole.
 rosconsole_DIR:PATH=/opt/ros/noetic/share/rosconsole/cmake
@@ -461,8 +476,14 @@ roscpp_traits_DIR:PATH=/opt/ros/noetic/share/roscpp_traits/cmake
 //The directory containing a CMake configuration file for rosgraph_msgs.
 rosgraph_msgs_DIR:PATH=/opt/ros/noetic/share/rosgraph_msgs/cmake
 
+//The directory containing a CMake configuration file for rospy.
+rospy_DIR:PATH=/opt/ros/noetic/share/rospy/cmake
+
 //The directory containing a CMake configuration file for rostime.
 rostime_DIR:PATH=/opt/ros/noetic/share/rostime/cmake
+
+//The directory containing a CMake configuration file for rov_planning.
+rov_planning_DIR:PATH=/home/ros/Code/devel/share/rov_planning/cmake
 
 //The directory containing a CMake configuration file for sensor_msgs.
 sensor_msgs_DIR:PATH=/opt/ros/noetic/share/sensor_msgs/cmake
@@ -478,6 +499,12 @@ ultrasonic_sensor_BINARY_DIR:STATIC=/home/ros/Code/build/ultrasonic_sensor
 
 //Value Computed by CMake
 ultrasonic_sensor_SOURCE_DIR:STATIC=/home/ros/Code/src/ultrasonic_sensor
+
+//Dependencies for the target
+ultrasonic_sensor_lib_LIB_DEPENDS:STATIC=general;/opt/ros/noetic/lib/libroscpp.so;general;/usr/lib/x86_64-linux-gnu/libpthread.so;general;/usr/lib/x86_64-linux-gnu/libboost_chrono.so.1.71.0;general;/usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.71.0;general;/opt/ros/noetic/lib/librosconsole.so;general;/opt/ros/noetic/lib/librosconsole_log4cxx.so;general;/opt/ros/noetic/lib/librosconsole_backend_interface.so;general;/usr/lib/x86_64-linux-gnu/liblog4cxx.so;general;/usr/lib/x86_64-linux-gnu/libboost_regex.so.1.71.0;general;/opt/ros/noetic/lib/libxmlrpcpp.so;general;/opt/ros/noetic/lib/libroscpp_serialization.so;general;/opt/ros/noetic/lib/librostime.so;general;/usr/lib/x86_64-linux-gnu/libboost_date_time.so.1.71.0;general;/opt/ros/noetic/lib/libcpp_common.so;general;/usr/lib/x86_64-linux-gnu/libboost_system.so.1.71.0;general;/usr/lib/x86_64-linux-gnu/libboost_thread.so.1.71.0;general;/usr/lib/x86_64-linux-gnu/libconsole_bridge.so.0.4;general;/opt/ros/noetic/lib/libserial.so;general;mosquitto;general;/usr/lib/x86_64-linux-gnu/libmosquittopp.so;
+
+//The directory containing a CMake configuration file for uuid_msgs.
+uuid_msgs_DIR:PATH=/opt/ros/noetic/share/uuid_msgs/cmake
 
 //The directory containing a CMake configuration file for xmlrpcpp.
 xmlrpcpp_DIR:PATH=/opt/ros/noetic/share/xmlrpcpp/cmake
@@ -675,6 +702,8 @@ CMAKE_UNAME:INTERNAL=/usr/bin/uname
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 //Details about finding PY_em
 FIND_PACKAGE_MESSAGE_DETAILS_PY_em:INTERNAL=[/usr/lib/python3/dist-packages/em.py][v()]
+//Details about finding PkgConfig
+FIND_PACKAGE_MESSAGE_DETAILS_PkgConfig:INTERNAL=[/usr/bin/pkg-config][v0.29.1()]
 //Details about finding PythonInterp
 FIND_PACKAGE_MESSAGE_DETAILS_PythonInterp:INTERNAL=[/usr/bin/python3][v3.8.10()]
 //Details about finding Threads
@@ -707,6 +736,43 @@ GTEST_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
 GTEST_MAIN_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: GTEST_MAIN_LIBRARY_DEBUG
 GTEST_MAIN_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+MOSQUITTO_CFLAGS:INTERNAL=
+MOSQUITTO_CFLAGS_I:INTERNAL=
+MOSQUITTO_CFLAGS_OTHER:INTERNAL=
+MOSQUITTO_FOUND:INTERNAL=1
+MOSQUITTO_INCLUDEDIR:INTERNAL=/usr/include
+MOSQUITTO_INCLUDE_DIRS:INTERNAL=
+MOSQUITTO_LDFLAGS:INTERNAL=-lmosquitto
+MOSQUITTO_LDFLAGS_OTHER:INTERNAL=
+MOSQUITTO_LIBDIR:INTERNAL=/usr/lib
+MOSQUITTO_LIBRARIES:INTERNAL=mosquitto
+MOSQUITTO_LIBRARY_DIRS:INTERNAL=
+MOSQUITTO_LIBS:INTERNAL=
+MOSQUITTO_LIBS_L:INTERNAL=
+MOSQUITTO_LIBS_OTHER:INTERNAL=
+MOSQUITTO_LIBS_PATHS:INTERNAL=
+MOSQUITTO_MODULE_NAME:INTERNAL=libmosquitto
+MOSQUITTO_PREFIX:INTERNAL=/usr
+MOSQUITTO_STATIC_CFLAGS:INTERNAL=
+MOSQUITTO_STATIC_CFLAGS_I:INTERNAL=
+MOSQUITTO_STATIC_CFLAGS_OTHER:INTERNAL=
+MOSQUITTO_STATIC_INCLUDE_DIRS:INTERNAL=
+MOSQUITTO_STATIC_LDFLAGS:INTERNAL=-lmosquitto
+MOSQUITTO_STATIC_LDFLAGS_OTHER:INTERNAL=
+MOSQUITTO_STATIC_LIBDIR:INTERNAL=
+MOSQUITTO_STATIC_LIBRARIES:INTERNAL=mosquitto
+MOSQUITTO_STATIC_LIBRARY_DIRS:INTERNAL=
+MOSQUITTO_STATIC_LIBS:INTERNAL=
+MOSQUITTO_STATIC_LIBS_L:INTERNAL=
+MOSQUITTO_STATIC_LIBS_OTHER:INTERNAL=
+MOSQUITTO_STATIC_LIBS_PATHS:INTERNAL=
+MOSQUITTO_VERSION:INTERNAL=1.6.9
+MOSQUITTO_libmosquitto_INCLUDEDIR:INTERNAL=
+MOSQUITTO_libmosquitto_LIBDIR:INTERNAL=
+MOSQUITTO_libmosquitto_PREFIX:INTERNAL=
+MOSQUITTO_libmosquitto_VERSION:INTERNAL=
+//ADVANCED property for variable: PKG_CONFIG_EXECUTABLE
+PKG_CONFIG_EXECUTABLE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: PYTHON_EXECUTABLE
 PYTHON_EXECUTABLE-ADVANCED:INTERNAL=1
 //This needs to be in PYTHONPATH when 'setup.py install' is called.
@@ -715,6 +781,8 @@ PYTHON_EXECUTABLE-ADVANCED:INTERNAL=1
 PYTHON_INSTALL_DIR:INTERNAL=lib/python3/dist-packages
 //CMAKE_INSTALL_PREFIX during last run
 _GNUInstallDirs_LAST_CMAKE_INSTALL_PREFIX:INTERNAL=/home/ros/Code/install
+__pkg_config_arguments_MOSQUITTO:INTERNAL=REQUIRED;libmosquitto
+__pkg_config_checked_MOSQUITTO:INTERNAL=1
 //ADVANCED property for variable: gmock_build_tests
 gmock_build_tests-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: gtest_build_samples
@@ -727,4 +795,7 @@ gtest_disable_pthreads-ADVANCED:INTERNAL=1
 gtest_force_shared_crt-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: gtest_hide_internal_symbols
 gtest_hide_internal_symbols-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_MOSQUITTO_mosquitto
+pkgcfg_lib_MOSQUITTO_mosquitto-ADVANCED:INTERNAL=1
+prefix_result:INTERNAL=/usr/lib
 

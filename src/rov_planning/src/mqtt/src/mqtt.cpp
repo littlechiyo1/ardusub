@@ -27,6 +27,13 @@ Mqtt_imp::Mqtt_imp(const char *id)
       connected_(false),
       pad_connected_(false) {}
 
+Mqtt_imp::Mqtt_imp(const char *id, bool is_singleton) 
+    : mosquittopp(id), 
+      closed_(true),
+      connected_(false),
+      pad_connected_(false) {
+}
+
 Mqtt_imp &Mqtt_imp::get_single() {
     static Mqtt_imp instance("planning");
     return instance;
@@ -316,6 +323,26 @@ void Mqtt_imp::SetRCOut(const std::vector<int>& data) {
     std::string result = buf_json.GetString();
     const char* topic="MACH/RCOut";
     publish(nullptr,topic,result.size(),result.data());
+}
+
+void Mqtt_imp::SetUltrasonicData(uint16_t distance) {
+    rapidjson::StringBuffer buf_json;
+    rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buf_json);
+    writer.StartObject();
+    writer.Key("distance");
+    writer.Uint(distance);
+    writer.Key("timestamp");
+    writer.Uint64(static_cast<uint64_t>(ros::Time::now().toSec() * 1000));
+    writer.EndObject();
+    std::string result = buf_json.GetString();
+    // publish(nullptr, "MACH/Ultrasonic", result.size(), result.data());
+    std::cout << "Publishing ultrasonic data: " << result << std::endl;
+    
+    int rc = publish(nullptr, "MACH/Ultrasonic", result.size(), result.data());
+    
+    if (rc != MOSQ_ERR_SUCCESS) {
+        std::cout << "Publish failed with code: " << rc << std::endl;
+    }
 }
 
 }  // namespace MQTT

@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/ros/Code/devel/.private/rov_planning/setup.sh

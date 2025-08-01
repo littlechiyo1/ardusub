@@ -56,11 +56,14 @@ public:
                        SPAD_RC_CONTROL,
                        SPAD_MODE_CONTROL,
                        SPAD_ARMED_CONTROL,
-                       SPAD_HEARTBEAT
+                       SPAD_HEARTBEAT,
+                       ULTRASONIC_DATA
                        };
 
 public:
+    Mqtt_imp(const char *id);
     static Mqtt_imp &get_single();
+    Mqtt_imp(const char *id, bool is_singleton);
     ~Mqtt_imp();
     bool init();
     void start();
@@ -73,6 +76,7 @@ public:
     void SetRCOut(const std::vector<int>&);
     void SetDepthData(double current_depth);
     void SetImuIfo(const ImuInfo&);
+    void SetUltrasonicData(uint16_t distance);
 
     void on_connect(int rc);
     void on_disconnect(int rc);
@@ -81,7 +85,6 @@ public:
     void on_message(const struct mosquitto_message *message);
 
 private:
-    Mqtt_imp(const char *id);
     void process();
     bool ParseRCControl(const char *mess);  
     bool ParseModeControl(const char *mess);
@@ -106,7 +109,8 @@ private:
     ImuInfo imu_info_{0};
 
     const char* WILL_MSG = "offline";
-    const char* SERVER_IP = "192.168.1.200";
+    // const char* SERVER_IP = "192.168.1.200";
+    const char* SERVER_IP = "10.2.1.227";
     const int PORT = 1883;
     const int KEEP_ALIVE = 60;
 
@@ -118,8 +122,6 @@ private:
     static const int MAX_RECONNECT_ATTEMPTS = 3;
     static const uint16_t HEART_BEAT_ADD_PERIOD = 500U;
     static const int MAX_HEARTBEAT_COUNT = 4;
-    
-
 
 };
 }  // namespace MQTT

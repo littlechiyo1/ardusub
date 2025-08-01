@@ -32,6 +32,9 @@ Not searching for unused variables given on the command line.
 [36m--[0m Using Python nosetests: /usr/bin/nosetests3
 [36m--[0m catkin 0.8.12
 [36m--[0m BUILD_SHARED_LIBS is on
+[36m--[0m Found PkgConfig: /usr/bin/pkg-config (found version "0.29.1")
+[36m--[0m Checking for module 'libmosquitto'
+[36m--[0m   Found libmosquitto, version 1.6.9
 [36m--[0m Configuring done
 [36m--[0m Generating done
 [36m--[0m Build files have been written to: /home/ros/Code/build/ultrasonic_sensor

@@ -1,0 +1,8 @@
+In file included from [01m[K/home/ros/Code/src/ultrasonic_sensor/src/ultrasonic/src/ultrasonic_sensor_node.cpp:1[m[K:
+[01m[K/home/ros/Code/src/ultrasonic_sensor/src/ultrasonic/include/ultrasonic_sensor_node.h:8:10:[m[K [01;31m[Kfatal error: [m[Kmqtt.h: 没有那个文件或目录
+    8 | #include [01;31m[K"mqtt.h"[m[K
+      |          [01;31m[K^~~~~~~~[m[K
+compilation terminated.
+make[2]: *** [CMakeFiles/ultrasonic_sensor_lib.dir/build.make:63：CMakeFiles/ultrasonic_sensor_lib.dir/src/ultrasonic/src/ultrasonic_sensor_node.cpp.o] 错误 1
+make[1]: *** [CMakeFiles/Makefile2:1395：CMakeFiles/ultrasonic_sensor_lib.dir/all] 错误 2
+make: *** [Makefile:141：all] 错误 2

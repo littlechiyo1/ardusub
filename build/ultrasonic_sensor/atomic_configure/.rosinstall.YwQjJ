@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/ros/Code/devel/.private/ultrasonic_sensor/setup.sh

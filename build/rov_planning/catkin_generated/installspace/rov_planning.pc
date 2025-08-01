@@ -1,0 +1,8 @@
+prefix=/home/ros/Code/install
+
+Name: rov_planning
+Description: Description of rov_planning
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: rospy std_msgs mavros_msgs

@@ -1,4 +1,3 @@
-<!-- src/ultrasonic_sensor/launch/with.launch -->
 <launch>
     <!-- 启动 rov_planning 模块 -->
     <include file="$(find rov_planning)/launch/rov_planning.launch" />

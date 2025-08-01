@@ -54,6 +54,7 @@ CMAKE_BINARY_DIR = /home/ros/Code/build/ultrasonic_sensor
 
 # The main recursive "all" target.
 all: CMakeFiles/ultrasonic_sensor_node.dir/all
+all: CMakeFiles/ultrasonic_sensor_lib.dir/all
 all: gtest/all
 
 .PHONY : all
@@ -92,6 +93,7 @@ clean: CMakeFiles/tests.dir/clean
 clean: CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/clean
 clean: CMakeFiles/std_msgs_generate_messages_cpp.dir/clean
 clean: CMakeFiles/std_msgs_generate_messages_py.dir/clean
+clean: CMakeFiles/ultrasonic_sensor_lib.dir/clean
 clean: CMakeFiles/sensor_msgs_generate_messages_cpp.dir/clean
 clean: CMakeFiles/std_msgs_generate_messages_nodejs.dir/clean
 clean: CMakeFiles/geometry_msgs_generate_messages_eus.dir/clean
@@ -182,17 +184,18 @@ CMakeFiles/ultrasonic_sensor_node.dir/all: CMakeFiles/roscpp_generate_messages_l
 CMakeFiles/ultrasonic_sensor_node.dir/all: CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/all
 CMakeFiles/ultrasonic_sensor_node.dir/all: CMakeFiles/std_msgs_generate_messages_cpp.dir/all
 CMakeFiles/ultrasonic_sensor_node.dir/all: CMakeFiles/std_msgs_generate_messages_py.dir/all
+CMakeFiles/ultrasonic_sensor_node.dir/all: CMakeFiles/ultrasonic_sensor_lib.dir/all
 CMakeFiles/ultrasonic_sensor_node.dir/all: CMakeFiles/sensor_msgs_generate_messages_cpp.dir/all
 CMakeFiles/ultrasonic_sensor_node.dir/all: CMakeFiles/std_msgs_generate_messages_nodejs.dir/all
 CMakeFiles/ultrasonic_sensor_node.dir/all: CMakeFiles/geometry_msgs_generate_messages_eus.dir/all
 	$(MAKE) -f CMakeFiles/ultrasonic_sensor_node.dir/build.make CMakeFiles/ultrasonic_sensor_node.dir/depend
 	$(MAKE) -f CMakeFiles/ultrasonic_sensor_node.dir/build.make CMakeFiles/ultrasonic_sensor_node.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ros/Code/build/ultrasonic_sensor/CMakeFiles --progress-num=9,10 "Built target ultrasonic_sensor_node"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ros/Code/build/ultrasonic_sensor/CMakeFiles --progress-num=12,13 "Built target ultrasonic_sensor_node"
 .PHONY : CMakeFiles/ultrasonic_sensor_node.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/ultrasonic_sensor_node.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/ros/Code/build/ultrasonic_sensor/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ros/Code/build/ultrasonic_sensor/CMakeFiles 5
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/ultrasonic_sensor_node.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/ros/Code/build/ultrasonic_sensor/CMakeFiles 0
 .PHONY : CMakeFiles/ultrasonic_sensor_node.dir/rule
@@ -935,6 +938,57 @@ std_msgs_generate_messages_py: CMakeFiles/std_msgs_generate_messages_py.dir/rule
 CMakeFiles/std_msgs_generate_messages_py.dir/clean:
 	$(MAKE) -f CMakeFiles/std_msgs_generate_messages_py.dir/build.make CMakeFiles/std_msgs_generate_messages_py.dir/clean
 .PHONY : CMakeFiles/std_msgs_generate_messages_py.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/ultrasonic_sensor_lib.dir
+
+# All Build rule for target.
+CMakeFiles/ultrasonic_sensor_lib.dir/all: CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/all
+CMakeFiles/ultrasonic_sensor_lib.dir/all: CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/all
+CMakeFiles/ultrasonic_sensor_lib.dir/all: CMakeFiles/roscpp_generate_messages_nodejs.dir/all
+CMakeFiles/ultrasonic_sensor_lib.dir/all: CMakeFiles/std_msgs_generate_messages_eus.dir/all
+CMakeFiles/ultrasonic_sensor_lib.dir/all: CMakeFiles/geometry_msgs_generate_messages_lisp.dir/all
+CMakeFiles/ultrasonic_sensor_lib.dir/all: CMakeFiles/geometry_msgs_generate_messages_py.dir/all
+CMakeFiles/ultrasonic_sensor_lib.dir/all: CMakeFiles/sensor_msgs_generate_messages_py.dir/all
+CMakeFiles/ultrasonic_sensor_lib.dir/all: CMakeFiles/geometry_msgs_generate_messages_cpp.dir/all
+CMakeFiles/ultrasonic_sensor_lib.dir/all: CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/all
+CMakeFiles/ultrasonic_sensor_lib.dir/all: CMakeFiles/roscpp_generate_messages_eus.dir/all
+CMakeFiles/ultrasonic_sensor_lib.dir/all: CMakeFiles/sensor_msgs_generate_messages_lisp.dir/all
+CMakeFiles/ultrasonic_sensor_lib.dir/all: CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/all
+CMakeFiles/ultrasonic_sensor_lib.dir/all: CMakeFiles/roscpp_generate_messages_py.dir/all
+CMakeFiles/ultrasonic_sensor_lib.dir/all: CMakeFiles/roscpp_generate_messages_cpp.dir/all
+CMakeFiles/ultrasonic_sensor_lib.dir/all: CMakeFiles/sensor_msgs_generate_messages_eus.dir/all
+CMakeFiles/ultrasonic_sensor_lib.dir/all: CMakeFiles/rosgraph_msgs_generate_messages_py.dir/all
+CMakeFiles/ultrasonic_sensor_lib.dir/all: CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/all
+CMakeFiles/ultrasonic_sensor_lib.dir/all: CMakeFiles/std_msgs_generate_messages_lisp.dir/all
+CMakeFiles/ultrasonic_sensor_lib.dir/all: CMakeFiles/roscpp_generate_messages_lisp.dir/all
+CMakeFiles/ultrasonic_sensor_lib.dir/all: CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/all
+CMakeFiles/ultrasonic_sensor_lib.dir/all: CMakeFiles/std_msgs_generate_messages_cpp.dir/all
+CMakeFiles/ultrasonic_sensor_lib.dir/all: CMakeFiles/std_msgs_generate_messages_py.dir/all
+CMakeFiles/ultrasonic_sensor_lib.dir/all: CMakeFiles/sensor_msgs_generate_messages_cpp.dir/all
+CMakeFiles/ultrasonic_sensor_lib.dir/all: CMakeFiles/std_msgs_generate_messages_nodejs.dir/all
+CMakeFiles/ultrasonic_sensor_lib.dir/all: CMakeFiles/geometry_msgs_generate_messages_eus.dir/all
+	$(MAKE) -f CMakeFiles/ultrasonic_sensor_lib.dir/build.make CMakeFiles/ultrasonic_sensor_lib.dir/depend
+	$(MAKE) -f CMakeFiles/ultrasonic_sensor_lib.dir/build.make CMakeFiles/ultrasonic_sensor_lib.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ros/Code/build/ultrasonic_sensor/CMakeFiles --progress-num=9,10,11 "Built target ultrasonic_sensor_lib"
+.PHONY : CMakeFiles/ultrasonic_sensor_lib.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/ultrasonic_sensor_lib.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ros/Code/build/ultrasonic_sensor/CMakeFiles 3
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/ultrasonic_sensor_lib.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ros/Code/build/ultrasonic_sensor/CMakeFiles 0
+.PHONY : CMakeFiles/ultrasonic_sensor_lib.dir/rule
+
+# Convenience name for target.
+ultrasonic_sensor_lib: CMakeFiles/ultrasonic_sensor_lib.dir/rule
+
+.PHONY : ultrasonic_sensor_lib
+
+# clean rule for target.
+CMakeFiles/ultrasonic_sensor_lib.dir/clean:
+	$(MAKE) -f CMakeFiles/ultrasonic_sensor_lib.dir/build.make CMakeFiles/ultrasonic_sensor_lib.dir/clean
+.PHONY : CMakeFiles/ultrasonic_sensor_lib.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/sensor_msgs_generate_messages_cpp.dir

@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "/home/ros/Code/devel/.private/ultrasonic_sensor/lib/ultrasonic_sensor/ultrasonic_sensor_node"
   "/home/ros/Code/devel/.private/ultrasonic_sensor/lib/ultrasonic_sensor/ultrasonic_sensor_node.pdb"
-  "CMakeFiles/ultrasonic_sensor_node.dir/src/ultrasonic_sensor_node.cpp.o"
+  "CMakeFiles/ultrasonic_sensor_node.dir/src/main.cpp.o"
 )
 
 # Per-language clean rules from dependency scanning.
