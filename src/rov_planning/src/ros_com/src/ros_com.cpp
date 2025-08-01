@@ -16,6 +16,7 @@ void RosCom::Init()
     rc_out_sub_  = nh_.subscribe("/mavros/rc/out", 1000, &RosCom::RCOutCallBack, this);
     altitude_sub_ = nh_.subscribe("/mavros/global_position/rel_alt", 1000, &RosCom::AltitudeCallBack, this);
     imu_sub_ = nh_.subscribe("/mavros/imu/data", 1000, &RosCom::ImuInfoCallBack, this);
+    ultrasonic_sub_ = nh_.subscribe("mavros/sensor/distance", 1000, &RosCom::UltrasonicCallBack, this);
     nh_.getParam("g_surface_depth", g_surface_depth_);
     nh_.getParam("g_bottom_offset",g_bottom_offset_);
     nh_.getParam("g_front_pitch_fix", g_front_pitch_fix_);
@@ -126,6 +127,12 @@ void RosCom::ImuInfoCallBack(const sensor_msgs::Imu::ConstPtr& msg) const
     imu.pitch *= RADIAN_TO_ANGLE;
     imu.yaw *= RADIAN_TO_ANGLE;
     MQTT::Mqtt_imp::get_single().SetImuIfo(imu);
+}
+
+void RosCom::UltrasonicCallBack(const std_msgs::UInt16::ConstPtr& msg)
+{
+    uint16_t distance = msg->data;
+    ROS_INFO("Received ultrasonic distance: %d mm", distance);
 }
 
 void RosCom::ModeControlCallBack(const ModeControl& send) 

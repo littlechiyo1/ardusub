@@ -13,6 +13,7 @@
 #include <mavros_msgs/Altitude.h>
 #include <sensor_msgs/Imu.h>
 #include <std_msgs/Float64.h>
+#include <std_msgs/UInt16.h>
 #include "mqtt.h"
 #include "common.h"
 
@@ -33,6 +34,7 @@ private:
     void RCOutCallBack(const mavros_msgs::RCOut::ConstPtr& msg) ;
     void AltitudeCallBack(const std_msgs::Float64::ConstPtr& msg) const;
     void ImuInfoCallBack(const sensor_msgs::Imu::ConstPtr& msg) const;
+    void UltrasonicCallBack(const std_msgs::UInt16::ConstPtr& msg);
 
     std::string SetChannels(const RCControl& send);
 
@@ -42,6 +44,7 @@ private:
     ros::Subscriber rc_out_sub_;
     ros::Subscriber altitude_sub_;
     ros::Subscriber imu_sub_;
+    ros::Subscriber ultrasonic_sub_;
 
     ros::ServiceClient set_mode_client_;
     ros::ServiceClient armed_client_;

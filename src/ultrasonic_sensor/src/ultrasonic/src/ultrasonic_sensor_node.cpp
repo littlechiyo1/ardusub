@@ -12,7 +12,7 @@ UltrasonicSensorNode::UltrasonicSensorNode(ros::NodeHandle& nh,
       baud_rate_(baud_rate),
       is_running_(false),
       mqtt_client_(nullptr) {
-    distance_pub_ = nh_.advertise<std_msgs::UInt16>("sensor_distance", 10);
+    distance_pub_ = nh_.advertise<std_msgs::UInt16>("mavros/sensor/distance", 1000);
 }
 
 UltrasonicSensorNode::~UltrasonicSensorNode() {

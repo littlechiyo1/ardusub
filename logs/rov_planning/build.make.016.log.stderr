@@ -1,0 +1,68 @@
+[01m[K/home/ros/Code/src/rov_planning/src/ros_com/src/ros_com.cpp:[m[K In member function ‘[01m[Kvoid rov_planning::RosCom::Init()[m[K’:
+[01m[K/home/ros/Code/src/rov_planning/src/ros_com/src/ros_com.cpp:19:23:[m[K [01;31m[Kerror: [m[K‘[01m[Knh[m[K’ was not declared in this scope; did you mean ‘[01m[Knh_[m[K’?
+   19 |     ultrasonic_sub_ = [01;31m[Knh[m[K.subscribe("mavros/sensor/distance", 1000, &RovCom::UltrasonicCallBack, this);
+      |                       [01;31m[K^~[m[K
+      |                       [32m[Knh_[m[K
+[01m[K/home/ros/Code/src/rov_planning/src/ros_com/src/ros_com.cpp:19:69:[m[K [01;31m[Kerror: [m[K‘[01m[KRovCom[m[K’ has not been declared
+   19 |     ultrasonic_sub_ = nh.subscribe("mavros/sensor/distance", 1000, &[01;31m[KRovCom[m[K::UltrasonicCallBack, this);
+      |                                                                     [01;31m[K^~~~~~[m[K
+[01m[K/home/ros/Code/src/rov_planning/src/application/src/application_impl.cpp:[m[K In member function ‘[01m[Kvirtual void rov_planning::MyApplicationImpl::ComManagementInitialize()[m[K’:
+[01m[K/home/ros/Code/src/rov_planning/src/application/src/application_impl.cpp:55:13:[m[K [01;35m[Kwarning: [m[K‘[01m[Kint mosqpp::lib_init()[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+   55 |     mosqpp::[01;35m[Klib_init[m[K();
+      |             [01;35m[K^~~~~~~~[m[K
+In file included from [01m[K/home/ros/Code/src/rov_planning/src/mqtt/include/mqtt.h:46[m[K,
+                 from [01m[K/home/ros/Code/src/rov_planning/src/application/include/application_impl.h:38[m[K,
+                 from [01m[K/home/ros/Code/src/rov_planning/src/application/src/application_impl.cpp:22[m[K:
+[01m[K/usr/include/mosquittopp.h:48:30:[m[K [01;36m[Knote: [m[Kdeclared here
+   48 | mosqpp_EXPORT int DEPRECATED [01;36m[Klib_init[m[K();
+      |                              [01;36m[K^~~~~~~~[m[K
+[01m[K/home/ros/Code/src/rov_planning/src/application/src/application_impl.cpp:55:22:[m[K [01;35m[Kwarning: [m[K‘[01m[Kint mosqpp::lib_init()[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+   55 |     mosqpp::lib_init([01;35m[K)[m[K;
+      |                      [01;35m[K^[m[K
+In file included from [01m[K/home/ros/Code/src/rov_planning/src/mqtt/include/mqtt.h:46[m[K,
+                 from [01m[K/home/ros/Code/src/rov_planning/src/application/include/application_impl.h:38[m[K,
+                 from [01m[K/home/ros/Code/src/rov_planning/src/application/src/application_impl.cpp:22[m[K:
+[01m[K/usr/include/mosquittopp.h:48:30:[m[K [01;36m[Knote: [m[Kdeclared here
+   48 | mosqpp_EXPORT int DEPRECATED [01;36m[Klib_init[m[K();
+      |                              [01;36m[K^~~~~~~~[m[K
+[01m[K/home/ros/Code/src/rov_planning/src/application/src/application_impl.cpp:55:22:[m[K [01;35m[Kwarning: [m[K‘[01m[Kint mosqpp::lib_init()[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+   55 |     mosqpp::lib_init([01;35m[K)[m[K;
+      |                      [01;35m[K^[m[K
+In file included from [01m[K/home/ros/Code/src/rov_planning/src/mqtt/include/mqtt.h:46[m[K,
+                 from [01m[K/home/ros/Code/src/rov_planning/src/application/include/application_impl.h:38[m[K,
+                 from [01m[K/home/ros/Code/src/rov_planning/src/application/src/application_impl.cpp:22[m[K:
+[01m[K/usr/include/mosquittopp.h:48:30:[m[K [01;36m[Knote: [m[Kdeclared here
+   48 | mosqpp_EXPORT int DEPRECATED [01;36m[Klib_init[m[K();
+      |                              [01;36m[K^~~~~~~~[m[K
+[01m[K/home/ros/Code/src/rov_planning/src/application/src/application_impl.cpp:[m[K In member function ‘[01m[Kvirtual void rov_planning::MyApplicationImpl::ComManagementShutdown()[m[K’:
+[01m[K/home/ros/Code/src/rov_planning/src/application/src/application_impl.cpp:73:13:[m[K [01;35m[Kwarning: [m[K‘[01m[Kint mosqpp::lib_cleanup()[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+   73 |     mosqpp::[01;35m[Klib_cleanup[m[K();
+      |             [01;35m[K^~~~~~~~~~~[m[K
+In file included from [01m[K/home/ros/Code/src/rov_planning/src/mqtt/include/mqtt.h:46[m[K,
+                 from [01m[K/home/ros/Code/src/rov_planning/src/application/include/application_impl.h:38[m[K,
+                 from [01m[K/home/ros/Code/src/rov_planning/src/application/src/application_impl.cpp:22[m[K:
+[01m[K/usr/include/mosquittopp.h:49:30:[m[K [01;36m[Knote: [m[Kdeclared here
+   49 | mosqpp_EXPORT int DEPRECATED [01;36m[Klib_cleanup[m[K();
+      |                              [01;36m[K^~~~~~~~~~~[m[K
+[01m[K/home/ros/Code/src/rov_planning/src/application/src/application_impl.cpp:73:25:[m[K [01;35m[Kwarning: [m[K‘[01m[Kint mosqpp::lib_cleanup()[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+   73 |     mosqpp::lib_cleanup([01;35m[K)[m[K;
+      |                         [01;35m[K^[m[K
+In file included from [01m[K/home/ros/Code/src/rov_planning/src/mqtt/include/mqtt.h:46[m[K,
+                 from [01m[K/home/ros/Code/src/rov_planning/src/application/include/application_impl.h:38[m[K,
+                 from [01m[K/home/ros/Code/src/rov_planning/src/application/src/application_impl.cpp:22[m[K:
+[01m[K/usr/include/mosquittopp.h:49:30:[m[K [01;36m[Knote: [m[Kdeclared here
+   49 | mosqpp_EXPORT int DEPRECATED [01;36m[Klib_cleanup[m[K();
+      |                              [01;36m[K^~~~~~~~~~~[m[K
+[01m[K/home/ros/Code/src/rov_planning/src/application/src/application_impl.cpp:73:25:[m[K [01;35m[Kwarning: [m[K‘[01m[Kint mosqpp::lib_cleanup()[m[K’ is deprecated [[01;35m[K-Wdeprecated-declarations[m[K]
+   73 |     mosqpp::lib_cleanup([01;35m[K)[m[K;
+      |                         [01;35m[K^[m[K
+In file included from [01m[K/home/ros/Code/src/rov_planning/src/mqtt/include/mqtt.h:46[m[K,
+                 from [01m[K/home/ros/Code/src/rov_planning/src/application/include/application_impl.h:38[m[K,
+                 from [01m[K/home/ros/Code/src/rov_planning/src/application/src/application_impl.cpp:22[m[K:
+[01m[K/usr/include/mosquittopp.h:49:30:[m[K [01;36m[Knote: [m[Kdeclared here
+   49 | mosqpp_EXPORT int DEPRECATED [01;36m[Klib_cleanup[m[K();
+      |                              [01;36m[K^~~~~~~~~~~[m[K
+make[2]: *** [CMakeFiles/rov_planning_node.dir/build.make:115：CMakeFiles/rov_planning_node.dir/src/ros_com/src/ros_com.cpp.o] 错误 1
+make[2]: *** 正在等待未完成的任务....
+make[1]: *** [CMakeFiles/Makefile2:180：CMakeFiles/rov_planning_node.dir/all] 错误 2
+make: *** [Makefile:141：all] 错误 2
