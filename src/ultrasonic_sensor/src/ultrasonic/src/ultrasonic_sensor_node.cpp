@@ -10,8 +10,7 @@ UltrasonicSensorNode::UltrasonicSensorNode(ros::NodeHandle& nh,
     : nh_(nh),
       serial_port_(serial_port),
       baud_rate_(baud_rate),
-      is_running_(false),
-      mqtt_client_(nullptr) {
+      is_running_(false) {
     distance_pub_ = nh_.advertise<std_msgs::UInt16>("mavros/sensor/distance", 1000);
 }
 
@@ -22,21 +21,9 @@ UltrasonicSensorNode::~UltrasonicSensorNode() {
     } else {
 
     }
-
-    if (mqtt_client_) {
-        mqtt_client_->stop();
-        delete mqtt_client_;
-        mqtt_client_ = nullptr;
-    } else {
-
-    }
 }
 
 bool UltrasonicSensorNode::Init() {
-    mqtt_client_ = new MQTT::Mqtt_imp("ultrasonic_sensor", true);
-    mqtt_client_->init();
-    mqtt_client_->start();
-
     ros::Duration(2.0).sleep();
     
     if (InitSerial()) {
@@ -103,7 +90,6 @@ void UltrasonicSensorNode::ProcessSensorData() {
                 distance_msg.data = distance;
                 distance_pub_.publish(distance_msg);
 
-                mqtt_client_->SetUltrasonicData(distance);   // Mqtt
             } else {
                 ROS_WARN_STREAM("Checksum mismatch: " << static_cast<int>(checksum)
                     << ", sum: " << static_cast<int>(calculated_sum));
@@ -112,7 +98,7 @@ void UltrasonicSensorNode::ProcessSensorData() {
             ROS_WARN_STREAM("Invalid header: 0x" << std::hex << static_cast<int>(header));
         }
     } else {
-        ROS_WARN("Incomplete packet or no response");
+        // ROS_WARN("Incomplete packet or no response");
         serial_.flushInput();
     }
 }

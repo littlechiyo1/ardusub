@@ -18,6 +18,7 @@
   <li><a href="#NOTES">NOTES</a></li>
   <li><a href="#RETURN-VALUES">RETURN VALUES</a></li>
   <li><a href="#EXAMPLES">EXAMPLES</a></li>
+  <li><a href="#BUGS">BUGS</a></li>
   <li><a href="#SEE-ALSO">SEE ALSO</a></li>
   <li><a href="#HISTORY">HISTORY</a></li>
   <li><a href="#COPYRIGHT">COPYRIGHT</a></li>
@@ -80,7 +81,7 @@
 
 <p>OBJ_dup() returns a copy of <i>o</i>.</p>
 
-<p>OBJ_create() adds a new object to the internal table. <i>oid</i> is the numerical form of the object, <i>sn</i> the short name and <i>ln</i> the long name. A new NID is returned for the created object in case of success and NID_undef in case of failure. Any of <i>oid</i>, <i>sn</i> and <i>ln</i> may be NULL, but not all at once.</p>
+<p>OBJ_create() adds a new object to the internal table. <i>oid</i> is the numerical form of the object, <i>sn</i> the short name and <i>ln</i> the long name. A new NID is returned for the created object in case of success and NID_undef in case of failure.</p>
 
 <p>OBJ_length() returns the size of the content octets of <i>obj</i>.</p>
 
@@ -111,8 +112,6 @@
 <p>Some objects are used to represent algorithms which do not have a corresponding ASN.1 OBJECT IDENTIFIER encoding (for example no OID currently exists for a particular algorithm). As a result they <b>cannot</b> be encoded or decoded as part of ASN.1 structures. Applications can determine if there is a corresponding OBJECT IDENTIFIER by checking OBJ_length() is not zero.</p>
 
 <p>These functions cannot return <b>const</b> because an <b>ASN1_OBJECT</b> can represent both an internal, constant, OID and a dynamically-created one. The latter cannot be constant because it needs to be freed after use.</p>
-
-<p>These functions were not thread safe in OpenSSL 3.0 and before.</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
@@ -145,6 +144,10 @@
 <p>Create a new object directly:</p>
 
 <pre><code> obj = OBJ_txt2obj(&quot;1.2.3.4&quot;, 1);</code></pre>
+
+<h1 id="BUGS">BUGS</h1>
+
+<p>Neither OBJ_create() nor OBJ_add_sigid() do any locking and are thus not thread safe. Moreover, none of the other functions should be called while concurrent calls to these two functions are possible.</p>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 

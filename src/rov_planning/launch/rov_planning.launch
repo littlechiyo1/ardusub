@@ -1,10 +1,14 @@
 <launch>
-
+    
     <node name="rov_planning" pkg = "rov_planning" type = "rov_planning_node" output = "screen"></node>
-    <param name="g_surface_depth" value="6.0" type="double"/>
-    <param name="g_bottom_offset" value="10.0" type="double"/>
-    <param name="g_front_pitch_fix" value="120.0" type="double"/>
-    <param name="g_rear_pitch_fix" value="90.0" type="double"/>
-
+	<node name="ultrasonic_sensor" pkg="ultrasonic_sensor" type="ultrasonic_sensor_node" output="screen" />
+    <param name="g_surface_depth" value="0.0" type="double"/>
+    <param name="g_bottom_offset" value="0.0" type="double"/>
+    <param name="g_front_pitch_fix" value="100.0" type="double"/>
+    <param name="g_rear_pitch_fix" value="100.0" type="double"/>
+    <param name="leakage_input_io" value="12" type="int"/>
+    
+    
+    
 </launch>
 

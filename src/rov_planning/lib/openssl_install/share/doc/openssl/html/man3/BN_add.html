@@ -15,7 +15,6 @@
   <li><a href="#NAME">NAME</a></li>
   <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
   <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
-  <li><a href="#NOTES">NOTES</a></li>
   <li><a href="#RETURN-VALUES">RETURN VALUES</a></li>
   <li><a href="#SEE-ALSO">SEE ALSO</a></li>
   <li><a href="#COPYRIGHT">COPYRIGHT</a></li>
@@ -99,10 +98,6 @@
 <p>For all functions, <i>ctx</i> is a previously allocated <b>BN_CTX</b> used for temporary variables; see <a href="../man3/BN_CTX_new.html">BN_CTX_new(3)</a>.</p>
 
 <p>Unless noted otherwise, the result <b>BIGNUM</b> must be different from the arguments.</p>
-
-<h1 id="NOTES">NOTES</h1>
-
-<p>For modular operations such as BN_nnmod() or BN_mod_exp() it is an error to use the same <b>BIGNUM</b> object for the modulus as for the output.</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 

@@ -25,7 +25,6 @@
   </li>
   <li><a href="#OPTIONS">OPTIONS</a>
     <ul>
-      <li><a href="#Program-Options">Program Options</a></li>
       <li><a href="#Common-Options">Common Options</a></li>
       <li><a href="#Format-Options">Format Options</a></li>
       <li><a href="#Pass-Phrase-Options">Pass Phrase Options</a></li>
@@ -53,11 +52,9 @@
 
 <p><b>openssl</b> <b>no-</b><i>XXX</i> [ <i>options</i> ]</p>
 
-<p><b>openssl</b> <b>-help</b> | <b>-version</b></p>
-
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>OpenSSL is a cryptography toolkit implementing the Secure Sockets Layer (SSL) and Transport Layer Security (TLS) network protocols and related cryptography standards required by them.</p>
+<p>OpenSSL is a cryptography toolkit implementing the Secure Sockets Layer (SSL v2/v3) and Transport Layer Security (TLS v1) network protocols and related cryptography standards required by them.</p>
 
 <p>The <b>openssl</b> program is a command line program for using the various cryptography functions of OpenSSL&#39;s <b>crypto</b> library from the shell. It can be used for</p>
 
@@ -502,30 +499,6 @@
 <p>SHA-3 512 Digest</p>
 
 </dd>
-<dt id="keccak-224"><b>keccak-224</b></dt>
-<dd>
-
-<p>KECCAK 224 Digest</p>
-
-</dd>
-<dt id="keccak-256"><b>keccak-256</b></dt>
-<dd>
-
-<p>KECCAK 256 Digest</p>
-
-</dd>
-<dt id="keccak-384"><b>keccak-384</b></dt>
-<dd>
-
-<p>KECCAK 384 Digest</p>
-
-</dd>
-<dt id="keccak-512"><b>keccak-512</b></dt>
-<dd>
-
-<p>KECCAK 512 Digest</p>
-
-</dd>
 <dt id="shake128"><b>shake128</b></dt>
 <dd>
 
@@ -692,34 +665,14 @@
 
 <p>Details of which options are available depend on the specific command. This section describes some common options with common behavior.</p>
 
-<h2 id="Program-Options">Program Options</h2>
-
-<p>These options can be specified without a command specified to get help or version information.</p>
+<h2 id="Common-Options">Common Options</h2>
 
 <dl>
 
 <dt id="help1"><b>-help</b></dt>
 <dd>
 
-<p>Provides a terse summary of all options. For more detailed information, each command supports a <b>-help</b> option. Accepts <b>--help</b> as well.</p>
-
-</dd>
-<dt id="version1"><b>-version</b></dt>
-<dd>
-
-<p>Provides a terse summary of the <b>openssl</b> program version. For more detailed information see <a href="../man1/openssl-version.html">openssl-version(1)</a>. Accepts <b>--version</b> as well.</p>
-
-</dd>
-</dl>
-
-<h2 id="Common-Options">Common Options</h2>
-
-<dl>
-
-<dt id="help2"><b>-help</b></dt>
-<dd>
-
-<p>If an option takes an argument, the &quot;type&quot; of argument is also given.</p>
+<p>Provides a terse summary of all options. If an option takes an argument, the &quot;type&quot; of argument is also given.</p>
 
 </dd>
 <dt id="pod"><b>--</b></dt>
@@ -781,13 +734,13 @@
 <dt id="ssl3--tls1--tls1_1--tls1_2--tls1_3--no_ssl3--no_tls1--no_tls1_1--no_tls1_2--no_tls1_3"><b>-ssl3</b>, <b>-tls1</b>, <b>-tls1_1</b>, <b>-tls1_2</b>, <b>-tls1_3</b>, <b>-no_ssl3</b>, <b>-no_tls1</b>, <b>-no_tls1_1</b>, <b>-no_tls1_2</b>, <b>-no_tls1_3</b></dt>
 <dd>
 
-<p>These options require or disable the use of the specified SSL or TLS protocols. When a specific TLS version is required, only that version will be offered or accepted. Only one specific protocol can be given and it cannot be combined with any of the <b>no_</b> options. The <b>no_*</b> options do not work with <b>s_time</b> and <b>ciphers</b> commands but work with <b>s_client</b> and <b>s_server</b> commands.</p>
+<p>These options require or disable the use of the specified SSL or TLS protocols. When a specific TLS version is required, only that version will be offered or accepted. Only one specific protocol can be given and it cannot be combined with any of the <b>no_</b> options.</p>
 
 </dd>
 <dt id="dtls--dtls1--dtls1_2"><b>-dtls</b>, <b>-dtls1</b>, <b>-dtls1_2</b></dt>
 <dd>
 
-<p>These options specify to use DTLS instead of TLS. With <b>-dtls</b>, clients will negotiate any supported DTLS protocol version. Use the <b>-dtls1</b> or <b>-dtls1_2</b> options to support only DTLS1.0 or DTLS1.2, respectively.</p>
+<p>These options specify to use DTLS instead of DLTS. With <b>-dtls</b>, clients will negotiate any supported DTLS protocol version. Use the <b>-dtls1</b> or <b>-dtls1_2</b> options to support only DTLS1.0 or DTLS1.2, respectively.</p>
 
 </dd>
 </dl>
@@ -850,7 +803,7 @@
 
 <p>For information about the use of environment variables in configuration, see <a href="../man5/config.html">&quot;ENVIRONMENT&quot; in config(5)</a>.</p>
 
-<p>For information about querying or specifying CPU architecture flags, see <a href="../man3/OPENSSL_ia32cap.html">OPENSSL_ia32cap(3)</a>, <a href="../man3/OPENSSL_s390xcap.html">OPENSSL_s390xcap(3)</a> and <a href="../man3/OPENSSL_riscvcap.html">OPENSSL_riscvcap(3)</a>.</p>
+<p>For information about querying or specifying CPU architecture flags, see <a href="../man3/OPENSSL_ia32cap.html">OPENSSL_ia32cap(3)</a>, and <a href="../man3/OPENSSL_s390xcap.html">OPENSSL_s390xcap(3)</a>.</p>
 
 <p>For information about all environment variables used by the OpenSSL libraries, see <a href="../man7/openssl-env.html">openssl-env(7)</a>.</p>
 
@@ -859,7 +812,7 @@
 <dt id="OPENSSL_TRACE-name"><b>OPENSSL_TRACE=</b><i>name</i>[,...]</dt>
 <dd>
 
-<p>Enable tracing output of OpenSSL library, by name. This output will only make sense if you know OpenSSL internals well. Also, it might not give you any output at all if OpenSSL was built without tracing support.</p>
+<p>Enable tracing output of OpenSSL library, by name. This output will only make sense if you know OpenSSL internals well. Also, it might not give you any output at all, depending on how OpenSSL was built.</p>
 
 <p>The value is a comma separated list of names, with the following available:</p>
 
@@ -967,12 +920,6 @@
 <p>Traces decrementing certain ASN.1 structure references.</p>
 
 </dd>
-<dt id="HTTP"><b>HTTP</b></dt>
-<dd>
-
-<p>Traces the HTTP client and server, such as messages being sent and received.</p>
-
-</dd>
 </dl>
 
 </dd>
@@ -994,7 +941,7 @@
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2000-2023 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2000-2022 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

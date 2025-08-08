@@ -86,7 +86,7 @@
 <dt id="pubin"><b>-pubin</b></dt>
 <dd>
 
-<p>By default a private key is read from the key input. With this option a public key is read instead. If the input contains no public key but a private key, its public part is used.</p>
+<p>The input file is an RSA public key.</p>
 
 </dd>
 <dt id="certin"><b>-certin</b></dt>
@@ -119,12 +119,10 @@
 <p>Decrypt the input data using an RSA private key.</p>
 
 </dd>
-<dt id="pkcs--oaep--x931--raw"><b>-pkcs</b>, <b>-oaep</b>, <b>-x931</b>, <b>-raw</b></dt>
+<dt id="pkcs--oaep--x931--raw"><b>-pkcs</b>, <b>-oaep</b>, <b>-x931</b> <b>-raw</b></dt>
 <dd>
 
 <p>The padding to use: PKCS#1 v1.5 (the default), PKCS#1 OAEP, ANSI X9.31, or no padding, respectively. For signatures, only <b>-pkcs</b> and <b>-raw</b> can be used.</p>
-
-<p>Note: because of protection against Bleichenbacher attacks, decryption using PKCS#1 v1.5 mode will not return errors in case padding check failed. Use <b>-raw</b> and inspect the returned value manually to check if the padding is correct.</p>
 
 </dd>
 <dt id="hexdump"><b>-hexdump</b></dt>
@@ -263,7 +261,7 @@
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2000-2023 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2000-2021 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

@@ -30,7 +30,7 @@
 
 <h1 id="SYNOPSIS">SYNOPSIS</h1>
 
-<p><b>openssl</b> <b>enc</b>|<i>cipher</i> [<b>-<i>cipher</i></b>] [<b>-help</b>] [<b>-list</b>] [<b>-ciphers</b>] [<b>-in</b> <i>filename</i>] [<b>-out</b> <i>filename</i>] [<b>-pass</b> <i>arg</i>] [<b>-e</b>] [<b>-d</b>] [<b>-a</b>] [<b>-base64</b>] [<b>-A</b>] [<b>-k</b> <i>password</i>] [<b>-kfile</b> <i>filename</i>] [<b>-K</b> <i>key</i>] [<b>-iv</b> <i>IV</i>] [<b>-S</b> <i>salt</i>] [<b>-salt</b>] [<b>-nosalt</b>] [<b>-z</b>] [<b>-md</b> <i>digest</i>] [<b>-iter</b> <i>count</i>] [<b>-pbkdf2</b>] [<b>-saltlen</b> <i>size</i>] [<b>-p</b>] [<b>-P</b>] [<b>-bufsize</b> <i>number</i>] [<b>-nopad</b>] [<b>-v</b>] [<b>-debug</b>] [<b>-none</b>] [<b>-engine</b> <i>id</i>] [<b>-rand</b> <i>files</i>] [<b>-writerand</b> <i>file</i>] [<b>-provider</b> <i>name</i>] [<b>-provider-path</b> <i>path</i>] [<b>-propquery</b> <i>propq</i>]</p>
+<p><b>openssl</b> <b>enc</b>|<i>cipher</i> [<b>-<i>cipher</i></b>] [<b>-help</b>] [<b>-list</b>] [<b>-ciphers</b>] [<b>-in</b> <i>filename</i>] [<b>-out</b> <i>filename</i>] [<b>-pass</b> <i>arg</i>] [<b>-e</b>] [<b>-d</b>] [<b>-a</b>] [<b>-base64</b>] [<b>-A</b>] [<b>-k</b> <i>password</i>] [<b>-kfile</b> <i>filename</i>] [<b>-K</b> <i>key</i>] [<b>-iv</b> <i>IV</i>] [<b>-S</b> <i>salt</i>] [<b>-salt</b>] [<b>-nosalt</b>] [<b>-z</b>] [<b>-md</b> <i>digest</i>] [<b>-iter</b> <i>count</i>] [<b>-pbkdf2</b>] [<b>-p</b>] [<b>-P</b>] [<b>-bufsize</b> <i>number</i>] [<b>-nopad</b>] [<b>-v</b>] [<b>-debug</b>] [<b>-none</b>] [<b>-engine</b> <i>id</i>] [<b>-rand</b> <i>files</i>] [<b>-writerand</b> <i>file</i>] [<b>-provider</b> <i>name</i>] [<b>-provider-path</b> <i>path</i>] [<b>-propquery</b> <i>propq</i>]</p>
 
 <p><b>openssl</b> <i>cipher</i> [<b>...</b>]</p>
 
@@ -101,8 +101,6 @@
 
 <p>Base64 process the data. This means that if encryption is taking place the data is base64 encoded after encryption. If decryption is set then the input data is base64 decoded before being decrypted.</p>
 
-<p>When the <b>-A</b> option not given, on encoding a newline is inserted after each 64 characters, and on decoding a newline is expected among the first 1024 bytes of input.</p>
-
 </dd>
 <dt id="base64"><b>-base64</b></dt>
 <dd>
@@ -113,7 +111,7 @@
 <dt id="A"><b>-A</b></dt>
 <dd>
 
-<p>If the <b>-a</b> option is set then base64 encoding produces output without any newline character, and base64 decoding does not require any newlines. Therefore it can be helpful to use the <b>-A</b> option when decoding unknown input.</p>
+<p>If the <b>-a</b> option is set then base64 process the data on one line.</p>
 
 </dd>
 <dt id="k-password"><b>-k</b> <i>password</i></dt>
@@ -143,13 +141,7 @@
 <dt id="pbkdf2"><b>-pbkdf2</b></dt>
 <dd>
 
-<p>Use PBKDF2 algorithm with a default iteration count of 10000 unless otherwise specified by the <b>-iter</b> command line option.</p>
-
-</dd>
-<dt id="saltlen"><b>-saltlen</b></dt>
-<dd>
-
-<p>Set the salt length to use when using the <b>-pbkdf2</b> option. For compatibility reasons, the default is 8 bytes. The maximum value is currently 16 bytes. If the <b>-pbkdf2</b> option is not used, then this option is ignored and a fixed salt length of 8 is used. The salt length used when encrypting must also be used when decrypting.</p>
+<p>Use PBKDF2 algorithm with default iteration count unless otherwise specified.</p>
 
 </dd>
 <dt id="nosalt"><b>-nosalt</b></dt>
@@ -167,7 +159,7 @@
 <dt id="S-salt"><b>-S</b> <i>salt</i></dt>
 <dd>
 
-<p>The actual salt to use: this must be represented as a string of hex digits. If this option is used while encrypting, the same exact value will be needed again during decryption. This salt may be truncated or zero padded to match the salt length (See <b>-saltlen</b>).</p>
+<p>The actual salt to use: this must be represented as a string of hex digits. If this option is used while encrypting, the same exact value will be needed again during decryption.</p>
 
 </dd>
 <dt id="K-key"><b>-K</b> <i>key</i></dt>
@@ -284,17 +276,11 @@
 
 <p>Blowfish and RC5 algorithms use a 128 bit key.</p>
 
-<p>Please note that OpenSSL 3.0 changed the effect of the <b>-S</b> option. Any explicit salt value specified via this option is no longer prepended to the ciphertext when encrypting, and must again be explicitly provided when decrypting. Conversely, when the <b>-S</b> option is used during decryption, the ciphertext is expected to not have a prepended salt value.</p>
-
-<p>When using OpenSSL 3.0 or later to decrypt data that was encrypted with an explicit salt under OpenSSL 1.1.1 do not use the <b>-S</b> option, the salt will then be read from the ciphertext. To generate ciphertext that can be decrypted with OpenSSL 1.1.1 do not use the <b>-S</b> option, the salt will be then be generated randomly and prepended to the output.</p>
-
 <h1 id="SUPPORTED-CIPHERS">SUPPORTED CIPHERS</h1>
 
 <p>Note that some of these ciphers can be disabled at compile time and some are available only if an appropriate engine is configured in the configuration file. The output when invoking this command with the <b>-list</b> option (that is <code>openssl enc -list</code>) is a list of ciphers, supported by your version of OpenSSL, including ones provided by configured engines.</p>
 
 <p>This command does not support authenticated encryption modes like CCM and GCM, and will not support such modes in the future. This is due to having to begin streaming output (e.g., to standard output when <b>-out</b> is not used) before the authentication tag could be validated. When this command is used in a pipeline, the receiving end will not be able to roll back upon authentication failure. The AEAD modes currently in common use also suffer from catastrophic failure of confidentiality and/or integrity upon reuse of key/iv/nonce, and since <b>openssl enc</b> places the entire burden of key/iv/nonce management upon the user, the risk of exposing AEAD modes is too great to allow. These key/iv/nonce management issues also affect other modes currently exposed in this command, but the failure modes are less extreme in these cases, and the functionality cannot be removed with a stable release branch. For bulk encryption of data, whether using authenticated encryption modes or other modes, <a href="../man1/openssl-cms.html">openssl-cms(1)</a> is recommended, as it provides a standard data format and performs the needed key/iv/nonce management.</p>
-
-<p>When enc is used with key wrapping modes the input data cannot be streamed, meaning it must be processed in a single pass. Consequently, the input data size must be less than the buffer size (-bufsize arg, default to 8*1024 bytes). The &#39;*-wrap&#39; ciphers require the input to be a multiple of 8 bytes long, because no padding is involved. The &#39;*-wrap-pad&#39; ciphers allow any input length. In both cases, no IV is needed. See example below.</p>
 
 <pre><code> base64             Base 64
 
@@ -382,9 +368,6 @@
  aes-[128|192|256]-ecb  128/192/256 bit AES in ECB mode
  aes-[128|192|256]-ofb  128/192/256 bit AES in OFB mode
 
- aes-[128|192|256]-wrap     key wrapping using 128/192/256 bit AES
- aes-[128|192|256]-wrap-pad key wrapping with padding using 128/192/256 bit AES
-
  aria-[128|192|256]-cbc  128/192/256 bit ARIA in CBC mode
  aria[128|192|256]       Alias for aria-[128|192|256]-cbc
  aria-[128|192|256]-cfb  128/192/256 bit ARIA in 128 bit CFB mode
@@ -431,15 +414,9 @@
 <pre><code> openssl enc -aes-256-ctr -pbkdf2 -d -a -in file.aes256 -out file.txt \
     -pass file:&lt;passfile&gt;</code></pre>
 
-<p>AES key wrapping:</p>
-
-<pre><code> openssl enc -e -a -id-aes128-wrap-pad -K 000102030405060708090A0B0C0D0E0F -in file.bin
-or
- openssl aes128-wrap-pad -e -a -K 000102030405060708090A0B0C0D0E0F -in file.bin</code></pre>
-
 <h1 id="BUGS">BUGS</h1>
 
-<p>The <b>-A</b> option when used with large files doesn&#39;t work properly. On the other hand, when base64 decoding without the <b>-A</b> option, if the first 1024 bytes of input do not include a newline character the first two lines of input are ignored.</p>
+<p>The <b>-A</b> option when used with large files doesn&#39;t work properly.</p>
 
 <p>The <b>openssl enc</b> command only supports a fixed number of algorithms with certain parameters. So if, for example, you want to use RC2 with a 76 bit key or RC4 with an 84 bit key you can&#39;t use this program.</p>
 
@@ -451,11 +428,9 @@ or
 
 <p>The <b>-ciphers</b> and <b>-engine</b> options were deprecated in OpenSSL 3.0.</p>
 
-<p>The <b>-saltlen</b> option was added in OpenSSL 3.2.</p>
-
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2000-2023 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2000-2021 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

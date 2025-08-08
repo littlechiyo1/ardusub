@@ -5,7 +5,6 @@
 #include <std_msgs/UInt16.h>
 #include <serial/serial.h>
 #include <string>
-#include "mqtt.h"
 
 namespace ultrasonic_sensor {
 namespace ultrasonic {
@@ -35,8 +34,6 @@ private:
     std::string serial_port_;             // 串口设备路径
     int baud_rate_;                       // 波特率
     bool is_running_;                     // 节点运行状态标志
-
-    MQTT::Mqtt_imp* mqtt_client_;
 
     static const int kLoopRate = 2;     // 2Hz---500ms
     static const int kDelayUs = 20000;  // 20ms

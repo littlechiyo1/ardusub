@@ -32,7 +32,7 @@
 
 <h2 id="Signature-Parameters">Signature Parameters</h2>
 
-<p>The following signature parameters can be set using EVP_PKEY_CTX_set_params(). This may be called after EVP_PKEY_sign_init() or EVP_PKEY_verify_init(), and before calling EVP_PKEY_sign() or EVP_PKEY_verify(). They may also be set using EVP_PKEY_sign_init_ex() or EVP_PKEY_verify_init_ex().</p>
+<p>The following signature parameters can be set using EVP_PKEY_CTX_set_params(). This may be called after EVP_PKEY_sign_init() or EVP_PKEY_verify_init(), and before calling EVP_PKEY_sign() or EVP_PKEY_verify().</p>
 
 <dl>
 
@@ -41,18 +41,6 @@
 
 </dd>
 <dt id="properties-OSSL_SIGNATURE_PARAM_PROPERTIES-UTF8-string">&quot;properties&quot; (<b>OSSL_SIGNATURE_PARAM_PROPERTIES</b>) &lt;UTF8 string&gt;</dt>
-<dd>
-
-</dd>
-<dt id="key-check-OSSL_SIGNATURE_PARAM_FIPS_KEY_CHECK-integer">&quot;key-check&quot; (<b>OSSL_SIGNATURE_PARAM_FIPS_KEY_CHECK</b>) &lt;integer&gt;</dt>
-<dd>
-
-</dd>
-<dt id="digest-check-OSSL_SIGNATURE_PARAM_FIPS_DIGEST_CHECK-integer">&quot;digest-check&quot; (<b>OSSL_SIGNATURE_PARAM_FIPS_DIGEST_CHECK</b>) &lt;integer&gt;</dt>
-<dd>
-
-</dd>
-<dt id="sign-x931-pad-check-SIGNATURE_PARAM_FIPS_SIGN_X931_PAD_CHECK-int">&quot;sign-x931-pad-check&quot; (<b>SIGNATURE_PARAM_FIPS_SIGN_X931_PAD_CHECK</b>) &lt;int&gt;</dt>
 <dd>
 
 <p>These common parameters are described in <a href="../man7/provider-signature.html">provider-signature(7)</a>.</p>
@@ -75,8 +63,6 @@
 </dd>
 <dt id="x931-OSSL_PKEY_RSA_PAD_MODE_X931">&quot;x931&quot; (<b>OSSL_PKEY_RSA_PAD_MODE_X931</b>)</dt>
 <dd>
-
-<p>This padding mode is no longer supported by the FIPS provider for signature generation, but may be used for signature verification for legacy use cases. (This is a FIPS 140-3 requirement)</p>
 
 </dd>
 <dt id="pss-OSSL_PKEY_RSA_PAD_MODE_PSS">&quot;pss&quot; (<b>OSSL_PKEY_RSA_PAD_MODE_PSS</b>)</dt>
@@ -123,12 +109,6 @@
 <p>Auto detect the salt length.</p>
 
 </dd>
-<dt id="auto-digestmax-OSSL_PKEY_RSA_PSS_SALT_LEN_AUTO_DIGEST_MAX">&quot;auto-digestmax&quot; (<b>OSSL_PKEY_RSA_PSS_SALT_LEN_AUTO_DIGEST_MAX</b>)</dt>
-<dd>
-
-<p>Auto detect the salt length when verifying. Maximize the salt length up to the digest size when signing to comply with FIPS 186-4 section 5.5.</p>
-
-</dd>
 </dl>
 
 </dd>
@@ -141,11 +121,7 @@
 <dt id="algorithm-id-OSSL_SIGNATURE_PARAM_ALGORITHM_ID-octet-string">&quot;algorithm-id&quot; (<b>OSSL_SIGNATURE_PARAM_ALGORITHM_ID</b>) &lt;octet string&gt;</dt>
 <dd>
 
-</dd>
-<dt id="fips-indicator-OSSL_SIGNATURE_PARAM_FIPS_APPROVED_INDICATOR-integer">&quot;fips-indicator&quot; (<b>OSSL_SIGNATURE_PARAM_FIPS_APPROVED_INDICATOR</b>) &lt;integer&gt;</dt>
-<dd>
-
-<p>These common parameter are described in <a href="../man7/provider-signature.html">provider-signature(7)</a>.</p>
+<p>This common parameter is described in <a href="../man7/provider-signature.html">provider-signature(7)</a>.</p>
 
 </dd>
 <dt id="digest-OSSL_SIGNATURE_PARAM_DIGEST-UTF8-string1">&quot;digest&quot; (<b>OSSL_SIGNATURE_PARAM_DIGEST</b>) &lt;UTF8 string&gt;</dt>
@@ -174,7 +150,7 @@
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2020-2021 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2020-2022 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

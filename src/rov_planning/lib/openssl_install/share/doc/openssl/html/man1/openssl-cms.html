@@ -54,7 +54,7 @@
 
 <p>Operation options:</p>
 
-<p>[<b>-encrypt</b>] [<b>-decrypt</b>] [<b>-sign</b>] [<b>-verify</b>] [<b>-resign</b>] [<b>-sign_receipt</b>] [<b>-verify_receipt</b> <i>receipt</i>] [<b>-digest</b> <i>digest</i>] [<b>-digest_create</b>] [<b>-digest_verify</b>] [<b>-compress</b>] [<b>-uncompress</b>] [<b>-EncryptedData_encrypt</b>] [<b>-EncryptedData_decrypt</b>] [<b>-data_create</b>] [<b>-data_out</b>] [<b>-cmsout</b>]</p>
+<p>[<b>-encrypt</b>] [<b>-decrypt</b>] [<b>-sign</b>] [<b>-verify</b>] [<b>-resign</b>] [<b>-sign_receipt</b>] [<b>-verify_receipt</b> <i>receipt</i>] [<b>-digest_create</b>] [<b>-digest_verify</b>] [<b>-compress</b>] [<b>-uncompress</b>] [<b>-EncryptedData_encrypt</b>] [<b>-EncryptedData_decrypt</b>] [<b>-data_create</b>] [<b>-data_out</b>] [<b>-cmsout</b>]</p>
 
 <p>File format options:</p>
 
@@ -176,14 +176,6 @@
 <dd>
 
 <p>Verify a signed receipt in filename <b>receipt</b>. The input message <b>must</b> contain the original receipt request. Functionality is otherwise similar to the <b>-verify</b> operation.</p>
-
-</dd>
-<dt id="digest-digest"><b>-digest</b> <i>digest</i></dt>
-<dd>
-
-<p>When used with <b>-sign</b>, provides the digest in hexadecimal form instead of computing it from the original message content. Cannot be combined with <b>-in</b> or <b>-nodetach</b>.</p>
-
-<p>This operation is the CMS equivalent of <a href="../man1/openssl-pkeyutl.html">openssl-pkeyutl(1)</a> signing. When signing a pre-computed digest, the security relies on the digest and its computation from the original message being trusted.</p>
 
 </dd>
 <dt id="digest_create"><b>-digest_create</b></dt>
@@ -393,7 +385,7 @@
 <dt id="recipient-cert"><i>recipient-cert</i> ...</dt>
 <dd>
 
-<p>This is an alternative to using the <b>-recip</b> option when encrypting a message. One or more certificate filenames may be given.</p>
+<p>This is an alternative to using the <b>-recip</b> option when encrypting a message. One or more certificate filennames may be given.</p>
 
 </dd>
 <dt id="cipher"><b>-<i>cipher</i></b></dt>
@@ -445,9 +437,7 @@
 <dt id="certfile-file"><b>-certfile</b> <i>file</i></dt>
 <dd>
 
-<p>Allows additional certificates to be specified. When signing these will be included with the message. When verifying, these will be searched for signer certificates and will be used for chain building.</p>
-
-<p>The input can be in PEM, DER, or PKCS#12 format.</p>
+<p>Allows additional certificates to be specified. When signing these will be included with the message. When verifying these will be searched for the signers certificates. The input can be in PEM, DER, or PKCS#12 format.</p>
 
 </dd>
 <dt id="cades"><b>-cades</b></dt>
@@ -874,11 +864,9 @@
 
 <p>The <b>-engine</b> option was deprecated in OpenSSL 3.0.</p>
 
-<p>The <b>-digest</b> option was added in OpenSSL 3.2.</p>
-
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2008-2023 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2008-2021 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

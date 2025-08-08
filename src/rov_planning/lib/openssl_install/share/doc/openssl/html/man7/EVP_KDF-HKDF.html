@@ -23,7 +23,6 @@
   <li><a href="#EXAMPLES">EXAMPLES</a></li>
   <li><a href="#CONFORMING-TO">CONFORMING TO</a></li>
   <li><a href="#SEE-ALSO">SEE ALSO</a></li>
-  <li><a href="#HISTORY">HISTORY</a></li>
   <li><a href="#COPYRIGHT">COPYRIGHT</a></li>
 </ul>
 
@@ -105,18 +104,6 @@
 </dl>
 
 </dd>
-<dt id="fips-indicator-OSSL_KDF_PARAM_FIPS_APPROVED_INDICATOR-integer">&quot;fips-indicator&quot; (<b>OSSL_KDF_PARAM_FIPS_APPROVED_INDICATOR</b>) &lt;integer&gt;</dt>
-<dd>
-
-<p>A getter that returns 1 if the operation is FIPS approved, or 0 otherwise. This may be used after calling EVP_KDF_derive. It returns 0 if any &quot;***-check&quot; related parameter is set to 0 and the check fails. This option is used by the OpenSSL FIPS provider.</p>
-
-</dd>
-<dt id="key-check-OSSL_KDF_PARAM_FIPS_KEY_CHECK-integer">&quot;key-check&quot; (<b>OSSL_KDF_PARAM_FIPS_KEY_CHECK</b>) &lt;integer&gt;</dt>
-<dd>
-
-<p>The default value of 1 causes an error during EVP_KDF_CTX_set_params() if the length of used key-derivation key (<b>OSSL_KDF_PARAM_KEY</b>) is shorter than 112 bits. Setting this to zero will ignore the error and set the approved &quot;fips-indicator&quot; to 0. This option is used by the OpenSSL FIPS provider, and breaks FIPS compliance if set to 0.</p>
-
-</dd>
 </dl>
 
 <h1 id="NOTES">NOTES</h1>
@@ -163,10 +150,6 @@
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
 <p><a href="../man3/EVP_KDF.html">EVP_KDF(3)</a>, <a href="../man3/EVP_KDF_CTX_new.html">EVP_KDF_CTX_new(3)</a>, <a href="../man3/EVP_KDF_CTX_free.html">EVP_KDF_CTX_free(3)</a>, <a href="../man3/EVP_KDF_CTX_get_kdf_size.html">EVP_KDF_CTX_get_kdf_size(3)</a>, <a href="../man3/EVP_KDF_CTX_set_params.html">EVP_KDF_CTX_set_params(3)</a>, <a href="../man3/EVP_KDF_derive.html">EVP_KDF_derive(3)</a>, <a href="../man3/EVP_KDF.html">&quot;PARAMETERS&quot; in EVP_KDF(3)</a>, <a href="../man7/EVP_KDF-TLS13_KDF.html">EVP_KDF-TLS13_KDF(7)</a></p>
-
-<h1 id="HISTORY">HISTORY</h1>
-
-<p>This functionality was added in OpenSSL 3.0.</p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

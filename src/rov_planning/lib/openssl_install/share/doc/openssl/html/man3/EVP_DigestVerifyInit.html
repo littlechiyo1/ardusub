@@ -39,7 +39,7 @@
  int EVP_DigestVerifyUpdate(EVP_MD_CTX *ctx, const void *d, size_t cnt);
  int EVP_DigestVerifyFinal(EVP_MD_CTX *ctx, const unsigned char *sig,
                            size_t siglen);
- int EVP_DigestVerify(EVP_MD_CTX *ctx, const unsigned char *sig,
+ int EVP_DigestVerify(EVP_MD_CTX *ctx, const unsigned char *sigret,
                       size_t siglen, const unsigned char *tbs, size_t tbslen);</code></pre>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
@@ -138,15 +138,9 @@
 
 <p>For some key types and parameters the random number generator must be seeded. If the automatic seeding or reseeding of the OpenSSL CSPRNG fails due to external circumstances (see <a href="../man7/RAND.html">RAND(7)</a>), the operation will fail.</p>
 
-<p>The call to EVP_DigestVerifyFinal() internally finalizes a copy of the digest context. This means that EVP_VerifyUpdate() and EVP_VerifyFinal() can be called later to digest and verify additional data. Applications may disable this behavior by setting the EVP_MD_CTX_FLAG_FINALISE context flag via <a href="../man3/EVP_MD_CTX_set_flags.html">EVP_MD_CTX_set_flags(3)</a>.</p>
-
-<p>Note that not all providers support continuation, in case the selected provider does not allow to duplicate contexts EVP_DigestVerifyFinal() will finalize the digest context and attempting to process additional data via EVP_DigestVerifyUpdate() will result in an error.</p>
+<p>The call to EVP_DigestVerifyFinal() internally finalizes a copy of the digest context. This means that EVP_VerifyUpdate() and EVP_VerifyFinal() can be called later to digest and verify additional data.</p>
 
 <p>EVP_DigestVerifyInit() and EVP_DigestVerifyInit_ex() functions can be called multiple times on a context and the parameters set by previous calls should be preserved if the <i>pkey</i> parameter is NULL. The call then just resets the state of the <i>ctx</i>.</p>
-
-<p>EVP_DigestVerify() can only be called once, and cannot be used again without reinitialising the <b>EVP_MD_CTX</b> by calling EVP_DigestVerifyInit_ex().</p>
-
-<p>Ignoring failure returns of EVP_DigestVerifyInit() and EVP_DigestVerifyInit_ex() functions can lead to subsequent undefined behavior when calling EVP_DigestVerifyUpdate(), EVP_DigestVerifyFinal(), or EVP_DigestVerify().</p>
 
 <h1 id="SEE-ALSO">SEE ALSO</h1>
 
@@ -162,7 +156,7 @@
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2006-2023 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2006-2022 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

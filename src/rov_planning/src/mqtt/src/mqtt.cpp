@@ -27,13 +27,6 @@ Mqtt_imp::Mqtt_imp(const char *id)
       connected_(false),
       pad_connected_(false) {}
 
-Mqtt_imp::Mqtt_imp(const char *id, bool is_singleton) 
-    : mosquittopp(id), 
-      closed_(true),
-      connected_(false),
-      pad_connected_(false) {
-}
-
 Mqtt_imp &Mqtt_imp::get_single() {
     static Mqtt_imp instance("planning");
     return instance;
@@ -158,7 +151,7 @@ void Mqtt_imp::ConnectionMonitor()
 }
 
 void Mqtt_imp::process() {
-  
+
     heartbeat_monitor_thread_ = std::thread(&Mqtt_imp::ConnectionMonitor, this);
     auto period = std::chrono::milliseconds(HEART_BEAT_ADD_PERIOD);
     while (!closed_) {
@@ -178,12 +171,12 @@ void Mqtt_imp::process() {
 
 void Mqtt_imp::ConnectMqttBroker()
 {
-    int rc = connect(SERVER_IP,PORT,  KEEP_ALIVE);
+    int rc = connect(SERVER_IP, PORT, KEEP_ALIVE);
     int count = 0;
-    const int retry_delay = 3;
+    auto retry_delay = std::chrono::milliseconds(3 * 1000);
     while (rc == MOSQ_ERR_ERRNO && (count++) != MAX_RECONNECT_ATTEMPTS) {
         printf("connect error: %s\n", mosqpp::strerror(rc));
-        sleep(retry_delay);
+        std::this_thread::sleep_for(retry_delay);
         rc = connect(SERVER_IP,PORT,  KEEP_ALIVE);
     }
     if (rc == MOSQ_ERR_SUCCESS) {
@@ -193,9 +186,9 @@ void Mqtt_imp::ConnectMqttBroker()
         subscribe(nullptr, "SPAD/ArmedControl");
         subscribe(nullptr, "SPAD/Heartbeat");
         // 循环处理数据
-        loop_start();
-    } 
-}
+       loop_start();
+    }
+ }
 
 
 bool Mqtt_imp::ParseRCControl(const char *mess) {
@@ -263,11 +256,7 @@ bool Mqtt_imp::ParseHeartbeat(const char *mess) {
     return true;
 }
 
-void Mqtt_imp::SetDepthData(double current_depth)
-{
-    std::lock_guard<std::mutex> lock(data_mutex_);
-    mode_status_.depth = current_depth;
-}
+
 
 void Mqtt_imp::SetImuIfo(const ImuInfo& imu_info)
 {
@@ -294,7 +283,7 @@ void Mqtt_imp::SetState(const ModeStatus& status) {
     
     std::string result = buf_json.GetString();
     const char* topic = "MACH/ModeStatus";
-    // ROS_INFO("motion:%d, armed:%d",status.motion_status, status.armed_status);
+    ROS_INFO("motion:%d, armed:%d, depth:%f",status.motion_status, status.armed_status, status.depth);
     publish(nullptr, topic, result.size(), result.data());
 }
 
@@ -304,10 +293,10 @@ void Mqtt_imp::SetRCOut(const std::vector<int>& data) {
     writer.StartObject();
     writer.Key("motion_control");
     writer.StartArray();
-    // ROS_INFO("-------------------------------");
+    ROS_INFO("-------------------------------");
     for (const auto& value : data) {
         writer.Int(value);         
-        // ROS_INFO("value:%d",value);
+        ROS_INFO("value:%d",value);
     }
     writer.EndArray();
     {
@@ -323,26 +312,6 @@ void Mqtt_imp::SetRCOut(const std::vector<int>& data) {
     std::string result = buf_json.GetString();
     const char* topic="MACH/RCOut";
     publish(nullptr,topic,result.size(),result.data());
-}
-
-void Mqtt_imp::SetUltrasonicData(uint16_t distance) {
-    rapidjson::StringBuffer buf_json;
-    rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buf_json);
-    writer.StartObject();
-    writer.Key("distance");
-    writer.Uint(distance);
-    writer.Key("timestamp");
-    writer.Uint64(static_cast<uint64_t>(ros::Time::now().toSec() * 1000));
-    writer.EndObject();
-    std::string result = buf_json.GetString();
-    // publish(nullptr, "MACH/Ultrasonic", result.size(), result.data());
-    std::cout << "Publishing ultrasonic data: " << result << std::endl;
-    
-    int rc = publish(nullptr, "MACH/Ultrasonic", result.size(), result.data());
-    
-    if (rc != MOSQ_ERR_SUCCESS) {
-        std::cout << "Publish failed with code: " << rc << std::endl;
-    }
 }
 
 }  // namespace MQTT

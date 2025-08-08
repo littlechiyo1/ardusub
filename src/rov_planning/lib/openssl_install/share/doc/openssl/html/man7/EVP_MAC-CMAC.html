@@ -62,21 +62,13 @@
 <dt id="cipher-OSSL_MAC_PARAM_CIPHER-UTF8-string">&quot;cipher&quot; (<b>OSSL_MAC_PARAM_CIPHER</b>) &lt;UTF8 string&gt;</dt>
 <dd>
 
-<p>Sets the name of the underlying cipher to be used. The mode of the cipher must be CBC.</p>
+<p>Sets the name of the underlying cipher to be used.</p>
 
 </dd>
 <dt id="properties-OSSL_MAC_PARAM_PROPERTIES-UTF8-string">&quot;properties&quot; (<b>OSSL_MAC_PARAM_PROPERTIES</b>) &lt;UTF8 string&gt;</dt>
 <dd>
 
 <p>Sets the properties to be queried when trying to fetch the underlying cipher. This must be given together with the cipher naming parameter to be considered valid.</p>
-
-</dd>
-<dt id="encrypt-check-OSSL_CIPHER_PARAM_FIPS_ENCRYPT_CHECK-integer">&quot;encrypt-check&quot; (<b>OSSL_CIPHER_PARAM_FIPS_ENCRYPT_CHECK</b>) &lt;integer&gt;</dt>
-<dd>
-
-<p>If required this parameter should be set before EVP_MAC_init()</p>
-
-<p>The default value of 1 causes an error when a unapproved Triple-DES encryption operation is triggered. Setting this to 0 will ignore the error and set the approved &quot;fips-indicator&quot; to 0. This option is used by the OpenSSL FIPS provider, and breaks FIPS compliance if set to 0.</p>
 
 </dd>
 </dl>
@@ -91,16 +83,14 @@
 <p>The &quot;size&quot; parameter can also be retrieved with with EVP_MAC_CTX_get_mac_size(). The length of the &quot;size&quot; parameter is equal to that of an <b>unsigned int</b>.</p>
 
 </dd>
-<dt id="block-size-OSSL_MAC_PARAM_BLOCK_SIZE-unsigned-integer">&quot;block-size&quot; (<b>OSSL_MAC_PARAM_BLOCK_SIZE</b>) &lt;unsigned integer&gt;</dt>
+</dl>
+
+<dl>
+
+<dt id="block-size-OSSL_MAC_PARAM_SIZE-unsigned-integer">&quot;block-size&quot; (<b>OSSL_MAC_PARAM_SIZE</b>) &lt;unsigned integer&gt;</dt>
 <dd>
 
 <p>Gets the MAC block size. The &quot;block-size&quot; parameter can also be retrieved with EVP_MAC_CTX_get_block_size().</p>
-
-</dd>
-<dt id="fips-indicator-OSSL_CIPHER_PARAM_FIPS_APPROVED_INDICATOR-integer">&quot;fips-indicator&quot; (<b>OSSL_CIPHER_PARAM_FIPS_APPROVED_INDICATOR</b>) &lt;integer&gt;</dt>
-<dd>
-
-<p>A getter that returns 1 if the operation is FIPS approved, or 0 otherwise. This may be used after calling EVP_MAC_final(). It may return 0 if the &quot;encrypt-check&quot; option is set to 0.</p>
 
 </dd>
 </dl>

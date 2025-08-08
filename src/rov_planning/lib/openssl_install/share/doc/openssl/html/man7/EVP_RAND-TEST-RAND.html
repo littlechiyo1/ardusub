@@ -22,7 +22,6 @@
   <li><a href="#NOTES">NOTES</a></li>
   <li><a href="#EXAMPLES">EXAMPLES</a></li>
   <li><a href="#SEE-ALSO">SEE ALSO</a></li>
-  <li><a href="#HISTORY">HISTORY</a></li>
   <li><a href="#COPYRIGHT">COPYRIGHT</a></li>
 </ul>
 
@@ -45,10 +44,6 @@
 <dl>
 
 <dt id="state-OSSL_RAND_PARAM_STATE-integer">&quot;state&quot; (<b>OSSL_RAND_PARAM_STATE</b>) &lt;integer&gt;</dt>
-<dd>
-
-</dd>
-<dt id="fips-indicator-OSSL_RAND_PARAM_FIPS_APPROVED_INDICATOR-integer">&quot;fips-indicator&quot; (<b>OSSL_RAND_PARAM_FIPS_APPROVED_INDICATOR</b>) &lt;integer&gt;</dt>
 <dd>
 
 <p>These parameter works as described in <a href="../man3/EVP_RAND.html">&quot;PARAMETERS&quot; in EVP_RAND(3)</a>.</p>
@@ -112,12 +107,6 @@
 <p>Sets the bytes returned when the test generator is sent a nonce request. Each nonce request will return all of the bytes.</p>
 
 </dd>
-<dt id="generate-OSSL_RAND_PARAM_GENERATE-integer">&quot;generate&quot; (<b>OSSL_RAND_PARAM_GENERATE</b>) &lt;integer&gt;</dt>
-<dd>
-
-<p>If this parameter is zero, it will only emit the nonce and entropy data supplied via the aforementioned parameters. Otherwise, low quality non-cryptographic pseudorandom output is produced. This parameter defaults to zero.</p>
-
-</dd>
 </dl>
 
 <h1 id="NOTES">NOTES</h1>
@@ -125,7 +114,7 @@
 <p>A context for a test generator can be obtained by calling:</p>
 
 <pre><code> EVP_RAND *rand = EVP_RAND_fetch(NULL, &quot;TEST-RAND&quot;, NULL);
- EVP_RAND_CTX *rctx = EVP_RAND_CTX_new(rand, NULL);</code></pre>
+ EVP_RAND_CTX *rctx = EVP_RAND_CTX_new(rand);</code></pre>
 
 <h1 id="EXAMPLES">EXAMPLES</h1>
 
@@ -157,13 +146,9 @@
 
 <p><a href="../man3/EVP_RAND.html">EVP_RAND(3)</a>, <a href="../man3/EVP_RAND.html">&quot;PARAMETERS&quot; in EVP_RAND(3)</a></p>
 
-<h1 id="HISTORY">HISTORY</h1>
-
-<p>This functionality was added in OpenSSL 3.0.</p>
-
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2020-2023 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2020-2021 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

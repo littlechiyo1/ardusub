@@ -16,15 +16,13 @@ void RosCom::Init()
     rc_out_sub_  = nh_.subscribe("/mavros/rc/out", 1000, &RosCom::RCOutCallBack, this);
     altitude_sub_ = nh_.subscribe("/mavros/global_position/rel_alt", 1000, &RosCom::AltitudeCallBack, this);
     imu_sub_ = nh_.subscribe("/mavros/imu/data", 1000, &RosCom::ImuInfoCallBack, this);
-    ultrasonic_sub_ = nh_.subscribe("mavros/sensor/distance", 1000, &RosCom::UltrasonicCallBack, this);
+    ultrasonic_sensor_sub_ = nh_.subscribe("mavros/sensor/distance", 1000, &RosCom::UltrasonicCallBack, this);
     nh_.getParam("g_surface_depth", g_surface_depth_);
-    nh_.getParam("g_bottom_offset",g_bottom_offset_);
+    nh_.getParam("g_bottom_offset", g_bottom_offset_);
     nh_.getParam("g_front_pitch_fix", g_front_pitch_fix_);
-    nh_.getParam("g_rear_pitch_fix",g_rear_pitch_fix_);
+    nh_.getParam("g_rear_pitch_fix", g_rear_pitch_fix_);
+    nh_.getParam("leakage_input_io", leakage_input_io_);
 
-    // altitude_sub_ = nh_.subscribe("/mavros/global_position/rel_alt", 1000, &RosCom::AltitudeCallBack, this);
-
-    
     const int neutral_duty = 1500;
     for (int i = 0 ; i < RC_OUT_VEC_SIZE; i++) {
         rc_out_vec_.emplace_back(neutral_duty);
@@ -53,6 +51,8 @@ void RosCom::StateCallBack(const mavros_msgs::State::ConstPtr& msg)
     } else {
 
     }
+    
+    mode_status_.depth = current_depth_;
     
     MQTT::Mqtt_imp::get_single().SetState(mode_status_);
 
@@ -106,10 +106,10 @@ void RosCom::RCControlCallBack(const RCControl& send)
     }
 }
 
-void RosCom::AltitudeCallBack(const std_msgs::Float64::ConstPtr& msg) const
+void RosCom::AltitudeCallBack(const std_msgs::Float64::ConstPtr& msg)
 {
-    double current_depth = -msg->data;
-    MQTT::Mqtt_imp::get_single().SetDepthData(current_depth);
+    std::lock_guard<std::mutex> lock(mutex_);
+    current_depth_ = -msg->data;
 }
 
 void RosCom::ImuInfoCallBack(const sensor_msgs::Imu::ConstPtr& msg) const
@@ -132,7 +132,7 @@ void RosCom::ImuInfoCallBack(const sensor_msgs::Imu::ConstPtr& msg) const
 void RosCom::UltrasonicCallBack(const std_msgs::UInt16::ConstPtr& msg)
 {
     uint16_t distance = msg->data;
-    ROS_INFO("Received ultrasonic distance: %d mm", distance);
+    // ROS_INFO("received distance: %d mm", distance);
 }
 
 void RosCom::ModeControlCallBack(const ModeControl& send) 
@@ -173,6 +173,12 @@ void RosCom::ArmedControlCallBack(const ArmedControl& send)
             break;
     }
     armed_client_.call(srv);
+}
+
+int RosCom::GetLeakageInputIO() const 
+{
+    return leakage_input_io_;
+
 }
 
 }  // namespace rov_planning

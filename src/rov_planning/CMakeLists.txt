@@ -13,10 +13,6 @@ find_package(catkin REQUIRED COMPONENTS
   mavros_msgs
 )
 
-find_package(PkgConfig REQUIRED)
-
-pkg_check_modules(MOSQUITTO REQUIRED libmosquittopp)
-
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
@@ -117,6 +113,9 @@ catkin_package(
 ## Build ##
 ###########
 
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(MOSQUITTO REQUIRED libmosquittopp)
+
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
@@ -126,8 +125,9 @@ include_directories(
   src/mqtt/include
   src/common
   src/ros_com/include
+  src/driver/include
+  /home/nvidia/catkin_ws/src/geometry2/tf2/include
   ${MOSQUITTO_INCLUDE_DIRS}
-  # lib/mosquitto_install/include
 )
 
 
@@ -164,11 +164,8 @@ src/*.cpp
  target_link_libraries(${PROJECT_NAME}_node
    ${catkin_LIBRARIES}
    ${MOSQUITTO_LIBRARIES}
-   ${SSL_LIBRARIES}
-  #  ${CMAKE_CURRENT_SOURCE_DIR}/lib/mosquitto_install/lib/libmosquittopp.so.1
-  #  ${CMAKE_CURRENT_SOURCE_DIR}/lib/mosquitto_install/lib/libmosquitto.so.1
-  #  ${CMAKE_CURRENT_SOURCE_DIR}/lib/openssl_install/lib64/libcrypto.so.3
-  #  ${CMAKE_CURRENT_SOURCE_DIR}/lib/openssl_install/lib64/libssl.so.3
+   ${CMAKE_CURRENT_SOURCE_DIR}/lib/openssl_install/lib64/libcrypto.so.3
+   ${CMAKE_CURRENT_SOURCE_DIR}/lib/openssl_install/lib64/libssl.so.3
  )
 
 #############

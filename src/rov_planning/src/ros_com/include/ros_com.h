@@ -15,7 +15,7 @@
 #include <std_msgs/Float64.h>
 #include <std_msgs/UInt16.h>
 #include "mqtt.h"
-#include "common.h"
+#include "planning_common.h"
 
 namespace rov_planning {
 
@@ -28,11 +28,12 @@ public:
     void RCControlCallBack(const RCControl&);
     void ModeControlCallBack(const ModeControl&);
     void ArmedControlCallBack(const ArmedControl&);
+    int GetLeakageInputIO() const;
 
 private:
     void StateCallBack(const mavros_msgs::State::ConstPtr& msg) ;
     void RCOutCallBack(const mavros_msgs::RCOut::ConstPtr& msg) ;
-    void AltitudeCallBack(const std_msgs::Float64::ConstPtr& msg) const;
+    void AltitudeCallBack(const std_msgs::Float64::ConstPtr& msg) ;
     void ImuInfoCallBack(const sensor_msgs::Imu::ConstPtr& msg) const;
     void UltrasonicCallBack(const std_msgs::UInt16::ConstPtr& msg);
 
@@ -44,7 +45,7 @@ private:
     ros::Subscriber rc_out_sub_;
     ros::Subscriber altitude_sub_;
     ros::Subscriber imu_sub_;
-    ros::Subscriber ultrasonic_sub_;
+    ros::Subscriber ultrasonic_sensor_sub_;
 
     ros::ServiceClient set_mode_client_;
     ros::ServiceClient armed_client_;
@@ -56,12 +57,14 @@ private:
     double g_bottom_offset_ = 10.0;
     double g_front_pitch_fix_ = 100.0;
     double g_rear_pitch_fix_ = 100.0;
+    int leakage_input_io_ = 12;
+    double current_depth_ = 0.00;
  
 
     constexpr static int CONTROL_TYPE = 100;
     const int MAX_DUTY = 1900;
     const int MIN_DUTY = 1100;
-    const int RC_OUT_VEC_SIZE = 6;
+    const int RC_OUT_VEC_SIZE = 8;
     const double RADIAN_TO_ANGLE = 180.0 / 3.14159;
 };
 

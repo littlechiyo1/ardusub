@@ -45,19 +45,19 @@
 <dt id="n-OSSL_PKEY_PARAM_RSA_N-unsigned-integer">&quot;n&quot; (<b>OSSL_PKEY_PARAM_RSA_N</b>) &lt;unsigned integer&gt;</dt>
 <dd>
 
-<p>The RSA modulus &quot;n&quot; value.</p>
+<p>The RSA &quot;n&quot; value.</p>
 
 </dd>
 <dt id="e-OSSL_PKEY_PARAM_RSA_E-unsigned-integer">&quot;e&quot; (<b>OSSL_PKEY_PARAM_RSA_E</b>) &lt;unsigned integer&gt;</dt>
 <dd>
 
-<p>The RSA public exponent &quot;e&quot; value. This value must always be set when creating a raw key using <a href="../man3/EVP_PKEY_fromdata.html">EVP_PKEY_fromdata(3)</a>. Note that when a decryption operation is performed, that this value is used for blinding purposes to prevent timing attacks.</p>
+<p>The RSA &quot;e&quot; value.</p>
 
 </dd>
 <dt id="d-OSSL_PKEY_PARAM_RSA_D-unsigned-integer">&quot;d&quot; (<b>OSSL_PKEY_PARAM_RSA_D</b>) &lt;unsigned integer&gt;</dt>
 <dd>
 
-<p>The RSA private exponent &quot;d&quot; value.</p>
+<p>The RSA &quot;d&quot; value.</p>
 
 </dd>
 <dt id="rsa-factor1-OSSL_PKEY_PARAM_RSA_FACTOR1-unsigned-integer">&quot;rsa-factor1&quot; (<b>OSSL_PKEY_PARAM_RSA_FACTOR1</b>) &lt;unsigned integer&gt;</dt>
@@ -141,7 +141,7 @@
 <dt id="rsa-exponent10-OSSL_PKEY_PARAM_RSA_EXPONENT10-unsigned-integer">&quot;rsa-exponent10&quot; (<b>OSSL_PKEY_PARAM_RSA_EXPONENT10</b>) &lt;unsigned integer&gt;</dt>
 <dd>
 
-<p>RSA CRT (Chinese Remainder Theorem) exponents. The exponents are known as &quot;dP&quot;, &quot;dQ&quot; and &quot;d_i&quot; in RFC8017. Up to eight additional &quot;d_i&quot; exponents are supported.</p>
+<p>RSA CRT (Chinese Remainder Theorem) exponents. The exponents are known as &quot;dP&quot;, &quot;dQ&quot; and &quot;d_i in RFC8017&quot;. Up to eight additional &quot;d_i&quot; exponents are supported.</p>
 
 </dd>
 <dt id="rsa-coefficient1-OSSL_PKEY_PARAM_RSA_COEFFICIENT1-unsigned-integer">&quot;rsa-coefficient1&quot; (<b>OSSL_PKEY_PARAM_RSA_COEFFICIENT1</b>) &lt;unsigned integer&gt;</dt>
@@ -206,12 +206,6 @@
 <dd>
 
 <p>The RSA &quot;e&quot; value. The value may be any odd number greater than or equal to 65537. The default value is 65537. For legacy reasons a value of 3 is currently accepted but is deprecated.</p>
-
-</dd>
-<dt id="rsa-derive-from-pq-OSSL_PKEY_PARAM_RSA_DERIVE_FROM_PQ-unsigned-integer">&quot;rsa-derive-from-pq&quot; (<b>OSSL_PKEY_PARAM_RSA_DERIVE_FROM_PQ</b>) &lt;unsigned integer&gt;</dt>
-<dd>
-
-<p>Indicate that missing parameters not passed in the parameter list should be derived if not provided. Setting a nonzero value will cause all needed exponents and coefficients to be derived if not available. Setting this option requires at least OSSL_PARAM_RSA_FACTOR1, OSSL_PARAM_RSA_FACTOR2, and OSSL_PARAM_RSA_N to be provided. This option is ignored if OSSL_KEYMGMT_SELECT_PRIVATE_KEY is not set in the selection parameter.</p>
 
 </dd>
 </dl>
@@ -282,7 +276,7 @@
 
 <p>For RSA keys, <a href="../man3/EVP_PKEY_param_check.html">EVP_PKEY_param_check(3)</a> and <a href="../man3/EVP_PKEY_param_check_quick.html">EVP_PKEY_param_check_quick(3)</a> both return 1 unconditionally.</p>
 
-<p>For RSA keys, <a href="../man3/EVP_PKEY_public_check.html">EVP_PKEY_public_check(3)</a> conforms to the SP800-56Br1 <i>public key check</i> when the OpenSSL FIPS provider is used. The OpenSSL default provider performs similar tests but relaxes the keysize restrictions for backwards compatibility.</p>
+<p>For RSA keys, <a href="../man3/EVP_PKEY_public_check.html">EVP_PKEY_public_check(3)</a> conforms to the SP800-56Br1 <i>public key check</i> when the OpenSSL FIPS provider is used. The OpenSSL default provider performs similiar tests but relaxes the keysize restrictions for backwards compatibility.</p>
 
 <p>For RSA keys, <a href="../man3/EVP_PKEY_public_check_quick.html">EVP_PKEY_public_check_quick(3)</a> is the same as <a href="../man3/EVP_PKEY_public_check.html">EVP_PKEY_public_check(3)</a>.</p>
 
@@ -352,7 +346,7 @@
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2020-2024 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2020-2022 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 

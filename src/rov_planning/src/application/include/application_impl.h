@@ -30,8 +30,6 @@
 #include <memory>
 #include <thread>
 #include "std_msgs/String.h"       
-#include "mavros_msgs/State.h"  
-#include "mavros_msgs/SetMode.h"   
 #include <sstream>
 
 #include "application_base.h"

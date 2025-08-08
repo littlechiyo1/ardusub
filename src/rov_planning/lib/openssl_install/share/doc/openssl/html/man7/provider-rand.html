@@ -141,7 +141,7 @@
 
 <p>OSSL_FUNC_rand_get_ctx_params() gets details of currently set parameter values associated with the given provider side rand context <i>ctx</i> and stores them in <i>params</i>. Passing NULL for <i>params</i> should return true.</p>
 
-<p>OSSL_FUNC_rand_gettable_params(), OSSL_FUNC_rand_gettable_ctx_params(), and OSSL_FUNC_rand_settable_ctx_params() all return constant <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> arrays as descriptors of the parameters that OSSL_FUNC_rand_get_params(), OSSL_FUNC_rand_get_ctx_params(), and OSSL_FUNC_rand_set_ctx_params() can handle, respectively. OSSL_FUNC_rand_gettable_ctx_params() and OSSL_FUNC_rand_settable_ctx_params() will return the parameters associated with the provider side context <i>ctx</i> in its current state if it is not NULL. Otherwise, they return the parameters associated with the provider side algorithm <i>provctx</i>.</p>
+<p>OSSL_FUNC_rand_gettable_params(), OSSL_FUNC_rand_gettable_ctx_params(), and OSSL_FUNC_rand_settable_ctx_params() all return constant <b>OSSL_PARAM</b> arrays as descriptors of the parameters that OSSL_FUNC_rand_get_params(), OSSL_FUNC_rand_get_ctx_params(), and OSSL_FUNC_rand_set_ctx_params() can handle, respectively. OSSL_FUNC_rand_gettable_ctx_params() and OSSL_FUNC_rand_settable_ctx_params() will return the parameters associated with the provider side context <i>ctx</i> in its current state if it is not NULL. Otherwise, they return the parameters associated with the provider side algorithm <i>provctx</i>.</p>
 
 <p>Parameters currently recognised by built-in rands are as follows. Not all parameters are relevant to, or are understood by all rands:</p>
 
@@ -157,12 +157,6 @@
 <dd>
 
 <p>Returns the bit strength of the random number generator.</p>
-
-</dd>
-<dt id="fips-indicator-OSSL_RAND_PARAM_FIPS_APPROVED_INDICATOR-integer">&quot;fips-indicator&quot; (<b>OSSL_RAND_PARAM_FIPS_APPROVED_INDICATOR</b>) &lt;integer&gt;</dt>
-<dd>
-
-<p>A getter that returns 1 if the operation is FIPS approved, or 0 otherwise. This option is used by the OpenSSL FIPS provider and is not supported by all EVP_RAND sources.</p>
 
 </dd>
 </dl>
@@ -245,25 +239,13 @@
 <p>Sets the properties to be queried when trying to fetch an underlying algorithm. This must be given together with the algorithm naming parameter to be considered valid.</p>
 
 </dd>
-<dt id="fips-indicator-OSSL_DRBG_PARAM_FIPS_APPROVED_INDICATOR-integer">&quot;fips-indicator&quot; (<b>OSSL_DRBG_PARAM_FIPS_APPROVED_INDICATOR</b>) &lt;integer&gt;</dt>
-<dd>
-
-<p>A getter that returns 1 if the operation is FIPS approved, or 0 otherwise. This may be used after calling OSSL_FUNC_rand_generate(). It may return 0 if the &quot;digest-check&quot; is set to 0. This option is used by the OpenSSL FIPS provider.</p>
-
-</dd>
-<dt id="digest-check-OSSL_DRBG_PARAM_FIPS_DIGEST_CHECK-integer">&quot;digest-check&quot; (<b>OSSL_DRBG_PARAM_FIPS_DIGEST_CHECK</b>) &lt;integer&gt;</dt>
-<dd>
-
-<p>If required this parameter should be set before the digest is set. The default value of 1 causes an error when the digest is set if the digest is not FIPS approved (e.g. truncated digests). Setting this to 0 will ignore the error and set the approved &quot;fips-indicator&quot; to 0. This option is used by the OpenSSL FIPS provider, and breaks FIPS compliance if set to 0.</p>
-
-</dd>
 </dl>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 
 <p>OSSL_FUNC_rand_newctx() should return the newly created provider side rand context, or NULL on failure.</p>
 
-<p>OSSL_FUNC_rand_gettable_params(), OSSL_FUNC_rand_gettable_ctx_params() and OSSL_FUNC_rand_settable_ctx_params() should return a constant <a href="../man3/OSSL_PARAM.html">OSSL_PARAM(3)</a> array, or NULL if none is offered.</p>
+<p>OSSL_FUNC_rand_gettable_params(), OSSL_FUNC_rand_gettable_ctx_params() and OSSL_FUNC_rand_settable_ctx_params() should return a constant <b>OSSL_PARAM</b> array, or NULL if none is offered.</p>
 
 <p>OSSL_FUNC_rand_nonce() returns the size of the generated nonce, or 0 on error.</p>
 
@@ -281,7 +263,7 @@
 
 <h1 id="HISTORY">HISTORY</h1>
 
-<p>The provider RAND interface was introduced in OpenSSL 3.0. The Rand Parameters &quot;fips-indicator&quot; and &quot;digest-check&quot; were added in OpenSSL 3.4.</p>
+<p>The provider RAND interface was introduced in OpenSSL 3.0.</p>
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 

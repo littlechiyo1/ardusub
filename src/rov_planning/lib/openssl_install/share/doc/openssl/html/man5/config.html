@@ -80,7 +80,7 @@
 
 <pre><code> .pragma [=] dollarid:value</code></pre>
 
-<p>The default behavior, where the <b>value</b> is <b>false</b> or <b>off</b>, is to treat the dollarsign as indicating a variable name; <code>foo$bar</code> is interpreted as <code>foo</code> followed by the expansion of the variable <code>bar</code>. If <b>value</b> is <b>true</b> or <b>on</b>, then <code>foo$bar</code> is a single seven-character name and variable expansions must be specified using braces or parentheses.</p>
+<p>The default behavior, where the <b>value</b> is <b>false</b> or <b>off</b>, is to treat the dollarsign as indicating a variable name; <code>foo$bar</code> is interpreted as <code>foo</code> followed by the expansion of the variable <code>bar</code>. If <b>value</b> is <b>true</b> or <b>on</b>, then <code>foo$bar</code> is a single seven-character name nad variable expansions must be specified using braces or parentheses.</p>
 
 <pre><code> .pragma [=] includedir:value</code></pre>
 
@@ -213,11 +213,7 @@
 <dt id="activate"><b>activate</b></dt>
 <dd>
 
-<p>If present and set to one of the values yes, on, true or 1, then the associated provider will be activated. Conversely, setting this value to no, off, false, or 0 will prevent the provider from being activated. Settings can be given in lower or uppercase. Setting activate to any other setting, or omitting a setting value will result in an error.</p>
-
-<p>= item <b>soft_load</b></p>
-
-<p>If enabled, informs the library to clear the error stack on failure to activate requested provider. A value of 1, yes, true or on (in lower or uppercase) will activate this setting, while a value of 0, no, false, of off (again in lower or uppercase) will disable this setting. Any other value will produce an error. Note this setting defaults to off if not provided</p>
+<p>If present, the module is activated. The value assigned to this name is not significant.</p>
 
 </dd>
 </dl>
@@ -338,7 +334,7 @@
 
 <h2 id="Random-Configuration">Random Configuration</h2>
 
-<p>The name <b>random</b> in the initialization section names the section containing the random number generator settings.</p>
+<p>The name <b>random</b> in the initialization section names the section containing the random number generater settings.</p>
 
 <p>Within the random section, the following names have meaning:</p>
 
@@ -489,7 +485,7 @@
 
 <h1 id="COPYRIGHT">COPYRIGHT</h1>
 
-<p>Copyright 2000-2023 The OpenSSL Project Authors. All Rights Reserved.</p>
+<p>Copyright 2000-2021 The OpenSSL Project Authors. All Rights Reserved.</p>
 
 <p>Licensed under the Apache License 2.0 (the &quot;License&quot;). You may not use this file except in compliance with the License. You can obtain a copy in the file LICENSE in the source distribution or at <a href="https://www.openssl.org/source/license.html">https://www.openssl.org/source/license.html</a>.</p>
 
