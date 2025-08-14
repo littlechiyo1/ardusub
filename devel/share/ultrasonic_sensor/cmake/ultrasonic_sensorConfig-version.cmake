@@ -1,1 +1,0 @@
-/home/ros/Code/devel/.private/ultrasonic_sensor/share/ultrasonic_sensor/cmake/ultrasonic_sensorConfig-version.cmake

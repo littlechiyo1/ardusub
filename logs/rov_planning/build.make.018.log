@@ -1,4 +1,0 @@
-[35m[1mScanning dependencies of target rov_planning_node[0m
-[ 16%] [32mBuilding CXX object CMakeFiles/rov_planning_node.dir/src/ros_com/src/ros_com.cpp.o[0m
-[ 33%] [32m[1mLinking CXX executable /home/ros/Code/devel/.private/rov_planning/lib/rov_planning/rov_planning_node[0m
-[100%] Built target rov_planning_node
