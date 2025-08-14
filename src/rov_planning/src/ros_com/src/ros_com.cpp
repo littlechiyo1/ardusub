@@ -17,6 +17,9 @@ void RosCom::Init()
     altitude_sub_ = nh_.subscribe("/mavros/global_position/rel_alt", 1000, &RosCom::AltitudeCallBack, this);
     imu_sub_ = nh_.subscribe("/mavros/imu/data", 1000, &RosCom::ImuInfoCallBack, this);
     ultrasonic_sensor_sub_ = nh_.subscribe("mavros/sensor/distance", 1000, &RosCom::UltrasonicCallBack, this);
+    battery_status_sub_ = nh_.subscribe("/mavros/battery", 1000, &RosCom::BatteryStatusCallBack, this);
+    twist_sub_ = nh_.subscribe("/mavros/local_position/velocity_body", 1000, &RosCom::TwistCallBack, this);
+    compass_sub_ = nh_.subscribe("/mavros/imu/mag", 1000, &RosCom::CompassCallBack, this);
     nh_.getParam("g_surface_depth", g_surface_depth_);
     nh_.getParam("g_bottom_offset", g_bottom_offset_);
     nh_.getParam("g_front_pitch_fix", g_front_pitch_fix_);
@@ -53,6 +56,7 @@ void RosCom::StateCallBack(const mavros_msgs::State::ConstPtr& msg)
     }
     
     mode_status_.depth = current_depth_;
+    ROS_INFO("current_depth: ", mode_status_.depth);
     
     MQTT::Mqtt_imp::get_single().SetState(mode_status_);
 
@@ -134,6 +138,32 @@ void RosCom::UltrasonicCallBack(const std_msgs::UInt16::ConstPtr& msg)
     uint16_t distance = msg->data;
     // ROS_INFO("received distance: %d mm", distance);
 }
+
+void RosCom::BatteryStatusCallBack(const mavros_msgs::BatteryStatus::ConstPtr& msg) const
+{
+    BatteryStatus battery_status;
+    battery_status.voltage = msg->voltage;      // V
+    battery_status.current = msg->current;      // A
+    battery_status.remaining = msg->remaining;  // 0..1
+    ROS_INFO("battery_status: %f V, %f A, %f", battery_status.voltage, battery_status.current, battery_status.remaining);
+    MQTT::Mqtt_imp::get_single().SetBatteryStatus(battery_status);
+}
+
+void RosCom::TwistCallBack(const geometry_msgs::Twist::ConstPtr& msg) const
+{
+    Twist twist;
+    twist.linear.x = msg->linear.x;
+    ROS_INFO("received linear x: %f", twist.linear.x);
+}
+
+void RosCom::CompassCallBack(const sensor_msgs::MagneticField::ConstPtr& msg) const
+{
+    Compass compass;
+    compass.x = msg->magnetic_field.x;
+    compass.y = msg->magnetic_field.y;
+    compass.z = msg->magnetic_field.z;
+    ROS_INFO("Mag: X=%f, Y=%f, Z=%f", compass.x, compass.y, compass.z); 
+} 
 
 void RosCom::ModeControlCallBack(const ModeControl& send) 
 {

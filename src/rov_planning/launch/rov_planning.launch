@@ -1,7 +1,7 @@
 <launch>
     
     <node name="rov_planning" pkg = "rov_planning" type = "rov_planning_node" output = "screen"></node>
-	<node name="ultrasonic_sensor" pkg="ultrasonic_sensor" type="ultrasonic_sensor_node" output="screen" />
+	<!-- <node name="ultrasonic_sensor" pkg="ultrasonic_sensor" type="ultrasonic_sensor_node" output="screen" /> -->
     <param name="g_surface_depth" value="0.0" type="double"/>
     <param name="g_bottom_offset" value="0.0" type="double"/>
     <param name="g_front_pitch_fix" value="100.0" type="double"/>

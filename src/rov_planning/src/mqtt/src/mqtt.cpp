@@ -278,9 +278,7 @@ void Mqtt_imp::SetState(const ModeStatus& status) {
         writer.Key("depth");
         writer.Double(mode_status_.depth);
         writer.EndObject();
-
     }
-    
     std::string result = buf_json.GetString();
     const char* topic = "MACH/ModeStatus";
     ROS_INFO("motion:%d, armed:%d, depth:%f",status.motion_status, status.armed_status, status.depth);
@@ -312,6 +310,26 @@ void Mqtt_imp::SetRCOut(const std::vector<int>& data) {
     std::string result = buf_json.GetString();
     const char* topic="MACH/RCOut";
     publish(nullptr,topic,result.size(),result.data());
+}
+
+void Mqtt_imp::SetBatteryStatus(const BatteryStatus& battery_status) {
+    rapidjson::StringBuffer buf_json;
+    rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buf_json);
+    {
+        std::lock_guard<std::mutex> lock(data_mutex_);
+        battery_status_ = battery_status;
+        writer.StartObject();
+        writer.Key("voltage");
+        writer.Double(battery_status_.voltage);
+        writer.Key("current");
+        writer.Double(battery_status_.current);
+        writer.Key("remaining");
+        writer.Double(battery_status_.remaining);
+    }
+    writer.EndObject();
+    std::string result = buf_json.GetString();
+    const char* topic = "MACH/BatteryStatus";
+    publish(nullptr, topic, result.size(), result.data());
 }
 
 }  // namespace MQTT

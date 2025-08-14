@@ -30,6 +30,12 @@ typedef struct {
 } ImuInfo;
 
 typedef struct {
+    double x;
+    double y;
+    double z;
+} Compass;
+
+typedef struct {
     double rc_control_value;
     int rc_in;
 } RCControl;
@@ -47,6 +53,21 @@ typedef struct {
     int armed_status;
     double depth;
 } ModeStatus;
+
+typedef struct {
+    double voltage;
+    double current;
+    double remaining;
+}BatteryStatus;
+
+typedef struct {
+    struct {
+        double x, y, z;
+    } linear; 
+    struct {
+        double x, y, z;
+    } angular;
+} Twist;
 
 typedef enum {
     FORWARD_CONTROL = 1,

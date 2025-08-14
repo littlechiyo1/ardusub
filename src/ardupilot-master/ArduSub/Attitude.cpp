@@ -89,6 +89,10 @@ float Sub::get_look_ahead_yaw()
 // without any deadzone at the bottom
 float Sub::get_pilot_desired_climb_rate(float throttle_control)
 {
+    // 添加调试输出：输入值和失控保护状态
+    hal.console->printf("DEBUG: throttle_control=%d, failsafe.pilot_input=%d\n", 
+                       throttle_control, (int)failsafe.pilot_input);
+
     // throttle failsafe check
     if (failsafe.pilot_input) {
         return 0.0f;
@@ -104,17 +108,24 @@ float Sub::get_pilot_desired_climb_rate(float throttle_control)
     float deadband_top = mid_stick + g.throttle_deadzone * gain;
     float deadband_bottom = mid_stick - g.throttle_deadzone * gain;
 
+    // 期望爬升率
+    float desired_rate = 0.0f;
+
     // check throttle is above, below or in the deadband
     if (throttle_control < deadband_bottom) {
         // below the deadband
-        return get_pilot_speed_dn() * (throttle_control-deadband_bottom) / deadband_bottom;
+        desired_rate = get_pilot_speed_dn() * (throttle_control-deadband_bottom) / deadband_bottom;
     } else if (throttle_control > deadband_top) {
         // above the deadband
-        return g.pilot_speed_up * (throttle_control-deadband_top) / (1000.0f-deadband_top);
+        desired_rate = g.pilot_speed_up * (throttle_control-deadband_top) / (1000.0f-deadband_top);
     } else {
         // must be in the deadband
-        return 0.0f;
+        desired_rate = 0.0f;
     }
+
+    // 返回值
+    hal.console->printf("DEBUG: get_pilot_desired_climb_rate return=%.2f\n", desired_rate);
+    return desired_rate;
 }
 
 // behavior is similar to Sub::get_pilot_desired_climb_rate

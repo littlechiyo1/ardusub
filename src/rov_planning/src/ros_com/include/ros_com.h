@@ -8,10 +8,14 @@
 #include <mavros_msgs/RCOut.h>
 #include <mavros_msgs/SetMode.h>
 #include <mavros_msgs/CommandBool.h>
+#include <mavros_msgs/BatteryStatus.h>
 #include <tf2/LinearMath/Quaternion.h>
 #include <tf2/LinearMath/Matrix3x3.h>
 #include <mavros_msgs/Altitude.h>
 #include <sensor_msgs/Imu.h>
+#include <geometry_msgs/Twist.h>
+#include <sensor_msgs/MagneticField.h>
+// #include <uORB/topics/vehicle_magnetometer.h>
 #include <std_msgs/Float64.h>
 #include <std_msgs/UInt16.h>
 #include "mqtt.h"
@@ -36,6 +40,9 @@ private:
     void AltitudeCallBack(const std_msgs::Float64::ConstPtr& msg) ;
     void ImuInfoCallBack(const sensor_msgs::Imu::ConstPtr& msg) const;
     void UltrasonicCallBack(const std_msgs::UInt16::ConstPtr& msg);
+    void BatteryStatusCallBack(const mavros_msgs::BatteryStatus::ConstPtr& msg) const;
+    void TwistCallBack(const geometry_msgs::Twist::ConstPtr& msg) const;
+    void CompassCallBack(const sensor_msgs::MagneticField::ConstPtr& msg) const;
 
     std::string SetChannels(const RCControl& send);
 
@@ -46,12 +53,17 @@ private:
     ros::Subscriber altitude_sub_;
     ros::Subscriber imu_sub_;
     ros::Subscriber ultrasonic_sensor_sub_;
+    ros::Subscriber battery_status_sub_;
+    ros::Subscriber twist_sub_;
+    ros::Subscriber compass_sub_;
 
     ros::ServiceClient set_mode_client_;
     ros::ServiceClient armed_client_;
 
     std::mutex mutex_;
     ModeStatus mode_status_{0};
+    Twist twist_{0};
+    Compass compass{0};
     std::vector<int> rc_out_vec_;
     double g_surface_depth_= -10.0;
     double g_bottom_offset_ = 10.0;
