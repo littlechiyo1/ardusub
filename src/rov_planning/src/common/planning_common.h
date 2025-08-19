@@ -58,7 +58,7 @@ typedef struct {
     double voltage;
     double current;
     double remaining;
-}BatteryStatus;
+}BatteryState;
 
 typedef struct {
     struct {
@@ -78,6 +78,7 @@ typedef enum {
     PITCH_CONTROL,
     CLOSE_CONTROL,
     LIGHT_CONTROL,
+    DEPTH_CONTROL,
     SURFACE_DEPTH = 11,
     BOTTOM_OFFSET,
     FRONT_PITCH_FIX,

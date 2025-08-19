@@ -312,11 +312,10 @@ void Mqtt_imp::SetRCOut(const std::vector<int>& data) {
     publish(nullptr,topic,result.size(),result.data());
 }
 
-void Mqtt_imp::SetBatteryStatus(const BatteryStatus& battery_status) {
+void Mqtt_imp::SetBatteryState(const BatteryState& battery_status) {
     rapidjson::StringBuffer buf_json;
     rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buf_json);
     {
-        std::lock_guard<std::mutex> lock(data_mutex_);
         battery_status_ = battery_status;
         writer.StartObject();
         writer.Key("voltage");

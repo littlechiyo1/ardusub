@@ -2,13 +2,27 @@
     
     <node name="rov_planning" pkg = "rov_planning" type = "rov_planning_node" output = "screen"></node>
 	<!-- <node name="ultrasonic_sensor" pkg="ultrasonic_sensor" type="ultrasonic_sensor_node" output="screen" /> -->
+    
+    <!-- PD控制器参数 -->
+    <param name="pd_control_enabled" value="true" />
+    <param name="pd_controller/threshold" value="0.05" />   <!-- 阈值 -->
+    
+    <!-- 目标值 -->
+    <param name="target_depth" value="0.0" />
+    <param name="target_pitch" value="0.0" />
+    <param name="target_roll" value="0.0" />
+    <param name="target_yaw" value="0.0" />
+    
+    <!-- PD控制器参数 -->
+    <param name="pd_controller/kp" value="1.5" />
+    <param name="pd_controller/kd" value="0.3" />
+    <param name="pd_controller/max_output" value="1.0" />
+    <param name="pd_controller/min_output" value="-1.0" />
+
     <param name="g_surface_depth" value="0.0" type="double"/>
     <param name="g_bottom_offset" value="0.0" type="double"/>
     <param name="g_front_pitch_fix" value="100.0" type="double"/>
     <param name="g_rear_pitch_fix" value="100.0" type="double"/>
     <param name="leakage_input_io" value="12" type="int"/>
-    
-    
-    
 </launch>
 

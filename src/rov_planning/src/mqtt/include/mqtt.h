@@ -72,7 +72,7 @@ public:
     void SetState(const ModeStatus& status);
     void SetRCOut(const std::vector<int>&);
     void SetImuIfo(const ImuInfo&);
-    void SetBatteryStatus(const BatteryStatus&);
+    void SetBatteryState(const BatteryState&);
 
     void on_connect(int rc);
     void on_disconnect(int rc);
@@ -104,7 +104,7 @@ private:
 
     ModeStatus mode_status_{0};
     ImuInfo imu_info_{0};
-    BatteryStatus battery_status_{0};
+    BatteryState battery_status_{0};
 
     const char* WILL_MSG = "offline";
     // const char* SERVER_IP = "192.168.137.200";

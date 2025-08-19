@@ -1,0 +1,28 @@
+{
+    "auto_path": [
+        {
+            "type_list":[
+                {
+                    "type":"forward",
+                    "duty":1600
+                },
+                {
+                    "type":"throttle",
+                    "duty":1300
+                }
+            ],
+            "time":12
+
+        },
+        {
+            "type_list":[
+                {
+                    "type":"yaw",
+                    "duty":1600
+                }              
+            ],
+            "time":1
+
+        }
+    ]
+}
