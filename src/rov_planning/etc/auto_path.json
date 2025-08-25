@@ -1,0 +1,53 @@
+{
+    "auto_path": [
+        {
+            "type_list":[
+                {
+                    "type":"forward",
+                    "duty":1600
+                },
+                {
+                    "type":"throttle",
+                    "duty":1400
+                }
+            ],
+            "time":8
+
+        },
+        {
+            "type_list":[
+                {
+                    "type":"yaw",
+                    "duty":1600
+                }              
+            ],
+            "time":4
+        },
+		{
+            "type_list":[
+                {
+                    "type":"yaw",
+                    "duty":1450
+                },
+                {
+                    "type":"throttle",
+                    "duty":1600
+                }
+            ],
+            "time":6
+        },
+		{
+            "type_list":[
+                {
+                    "type":"yaw",
+                    "duty":1650
+                },
+                {
+                    "type":"throttle",
+                    "duty":1600
+                }
+            ],
+            "time":9
+        }
+    ]
+}

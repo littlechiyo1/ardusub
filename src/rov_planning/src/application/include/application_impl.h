@@ -35,6 +35,9 @@
 #include "application_base.h"
 #include "mqtt.h"
 #include "ros_com.h"
+#include "leakage_parser.h"
+#include "auto_cruise.h"
+#include "motion_planner.h"
 
 
 namespace rov_planning {
@@ -75,8 +78,11 @@ protected:
 
 private:
 
+	std::shared_ptr<ThreadPool> pool_;
     std::shared_ptr<RosCom> roscom_{nullptr};
-    
+    std::shared_ptr<LeakageParser> leakage_parser_{nullptr};
+    std::shared_ptr<AutoCruise> auto_cruise_{nullptr};
+	std::shared_ptr<MotionPlanner> motion_planner_{nullptr};
 };
 
 }  // namespace rov_planning

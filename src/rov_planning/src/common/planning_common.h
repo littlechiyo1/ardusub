@@ -30,10 +30,10 @@ typedef struct {
 } ImuInfo;
 
 typedef struct {
-    double x;
-    double y;
-    double z;
-} Compass;
+	ImuInfo imu_info;
+	double depth;
+	double speed;
+} MotionStatus;
 
 typedef struct {
     double rc_control_value;
@@ -58,16 +58,26 @@ typedef struct {
     double voltage;
     double current;
     double remaining;
-}BatteryState;
+} BatteryStatus;
 
 typedef struct {
     struct {
         double x, y, z;
-    } linear; 
+    } linear;  // 线速度分量
+
     struct {
         double x, y, z;
-    } angular;
+    } angular; // 角速度分量
 } Twist;
+
+typedef struct {
+	double kp;
+	double ki;
+	double kd;
+	double gradient;
+	double start_offset;
+	double stop_offset;
+} PIDParams;
 
 typedef enum {
     FORWARD_CONTROL = 1,
@@ -78,12 +88,19 @@ typedef enum {
     PITCH_CONTROL,
     CLOSE_CONTROL,
     LIGHT_CONTROL,
-    DEPTH_CONTROL,
     SURFACE_DEPTH = 11,
     BOTTOM_OFFSET,
     FRONT_PITCH_FIX,
     REAR_PITCH_FIX
 } ControlTypeEnum;
+
+typedef enum {
+	ROLL_PID = 0,
+	PITCH_PID,
+	YAW_PID,
+	DEPTH_PID,
+	SPEED_PID
+} PidTypeEnum;
 
 typedef enum {
     MODE_MANUAL = 0,

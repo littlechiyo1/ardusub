@@ -42,6 +42,9 @@ bool Mqtt_imp::init() {
     string_topic_map_["SPAD/RCControl"] = Topic::SPAD_RC_CONTROL;
     string_topic_map_["SPAD/ArmedControl"] = Topic::SPAD_ARMED_CONTROL;
     string_topic_map_["SPAD/Heartbeat"] = Topic::SPAD_HEARTBEAT;
+  	string_topic_map_["SPAD/AutoCruise"] = Topic::SPAD_AUTO_CRUISE;
+  	string_topic_map_["SPAD/DebugTargetValue"] = Topic::SPAD_DEBUG_TARGET_VALUE;
+	
     return true;
 }
 
@@ -52,14 +55,6 @@ void Mqtt_imp::start() {
 
 void Mqtt_imp::stop() {
     closed_ = true;
-    try {
-        if (heartbeat_monitor_thread_.joinable()) {
-            heartbeat_monitor_thread_.detach();
-        }
-       
-    } catch (const std::exception &e) {
-        std::cout << "catched heartbeat_monitor_thread exception (shutdown):" << e.what() << std::endl;
-    }
     try {
         if (mqtt_thread_.joinable()) {
             mqtt_thread_.detach();
@@ -72,13 +67,24 @@ void Mqtt_imp::stop() {
 
 void Mqtt_imp::on_connect(int rc) 
 { 
-    std::cout << "on connect" << std::endl; 
-    connected_.store(true);
+    if (rc == 0) {
+      std::cout << "Broker connected! " << std::endl;
+      connected_.store(true);
+      subscribe(nullptr, "SPAD/RCControl");
+      subscribe(nullptr, "SPAD/ModeControl");
+      subscribe(nullptr, "SPAD/ArmedControl");
+      subscribe(nullptr, "SPAD/Heartbeat");
+	  subscribe(nullptr, "SPAD/AutoCruise");
+	  subscribe(nullptr, "SPAD/DebugTargetValue");
+    } else {
+        std::cerr << "Connect failed: " << mosqpp::connack_string(rc) << std::endl;
+    }
+    
 }
 
 void Mqtt_imp::on_disconnect(int rc) 
 { 
-    std::cout << "disconnect" << std::endl; 
+    std::cout << "Disconnected: " << rc << ". Reconnecting..." << std::endl;
     connected_.store(false);
 }
 
@@ -103,8 +109,17 @@ void Mqtt_imp::SetArmedControlCallBack(const std::function<void(const ArmedContr
     armed_control_func_ = cb;
 }
 
+void Mqtt_imp::SetDebugTargetValueCallBack(const std::function<void(int, double)>& cb)
+{
+    debug_target_value_func_ = cb;
+}
+
+void Mqtt_imp::SetMotionPlannerCallBack(const std::function<void(const RCControl&)>& cb)
+{
+    motion_planner_func_ = cb;
+}
+
 void Mqtt_imp::on_message(const struct mosquitto_message *message) {
-    // std::cout << "------on message------" << std::endl;
     bool res = false;
     Topic topic = Topic::NO_TOPIC;
     for (const auto &temp : string_topic_map_) {
@@ -114,7 +129,8 @@ void Mqtt_imp::on_message(const struct mosquitto_message *message) {
             break;
         }
     }
-    // std::cout << (const char *)message->payload << std::endl;
+	 std::cout << (const char *)message->topic << std::endl;
+     std::cout << (const char *)message->payload << std::endl;
     switch (topic) {
         case Topic::SPAD_RC_CONTROL: {
             ParseRCControl(static_cast<const char *>(message->payload));
@@ -132,27 +148,28 @@ void Mqtt_imp::on_message(const struct mosquitto_message *message) {
             ParseHeartbeat(static_cast<const char *>(message->payload));
             break;
         }
+		case Topic::SPAD_AUTO_CRUISE: {            
+            ParseAutoCruise(static_cast<const char *>(message->payload));
+            break;
+        }
+		case Topic::SPAD_DEBUG_TARGET_VALUE: {            
+            DebugTargetValue(static_cast<const char *>(message->payload));
+            break;
+        }
         default:
             break;
     }
 }
 
-void Mqtt_imp::ConnectionMonitor()
-{
-    auto period = std::chrono::milliseconds(HEART_BEAT_ADD_PERIOD);
-    while (!closed_) {
-        if (!connected_.load()) {
-            ConnectMqttBroker();
-        }
-        
-        std::this_thread::sleep_for(period);
-        // ROS_INFO("run monitor thread");     
-    }
-}
 
 void Mqtt_imp::process() {
-
-    heartbeat_monitor_thread_ = std::thread(&Mqtt_imp::ConnectionMonitor, this);
+  
+	const int delay_time{2};
+    reconnect_delay_set(delay_time, delay_time, true);
+    connect_async(SERVER_IP,PORT,  KEEP_ALIVE); // 异步连接
+        
+    // 循环处理数据
+    loop_start();
     auto period = std::chrono::milliseconds(HEART_BEAT_ADD_PERIOD);
     while (!closed_) {
         {
@@ -169,27 +186,6 @@ void Mqtt_imp::process() {
     }
 }
 
-void Mqtt_imp::ConnectMqttBroker()
-{
-    int rc = connect(SERVER_IP, PORT, KEEP_ALIVE);
-    int count = 0;
-    auto retry_delay = std::chrono::milliseconds(3 * 1000);
-    while (rc == MOSQ_ERR_ERRNO && (count++) != MAX_RECONNECT_ATTEMPTS) {
-        printf("connect error: %s\n", mosqpp::strerror(rc));
-        std::this_thread::sleep_for(retry_delay);
-        rc = connect(SERVER_IP,PORT,  KEEP_ALIVE);
-    }
-    if (rc == MOSQ_ERR_SUCCESS) {
-        // 订阅消息
-        subscribe(nullptr, "SPAD/RCControl");
-        subscribe(nullptr, "SPAD/ModeControl");
-        subscribe(nullptr, "SPAD/ArmedControl");
-        subscribe(nullptr, "SPAD/Heartbeat");
-        // 循环处理数据
-       loop_start();
-    }
- }
-
 
 bool Mqtt_imp::ParseRCControl(const char *mess) {
 
@@ -202,9 +198,10 @@ bool Mqtt_imp::ParseRCControl(const char *mess) {
         if (dom.HasMember("rc_control_value") && dom["rc_control_value"].IsDouble()) {
             temp.rc_control_value = dom["rc_control_value"].GetDouble();
         }
-
+		auto_cruise_->CloseAutoCruiseThread();
+		motion_planner_func_(temp);
         rc_control_func_(temp);
-        
+		
       
     } else {
         return false;
@@ -219,6 +216,7 @@ bool Mqtt_imp::ParseModeControl(const char *mess) {
         if (dom.HasMember("mode_control") && dom["mode_control"].IsInt()) {
             temp.mode_control = dom["mode_control"].GetInt();
         }
+		auto_cruise_->CloseAutoCruiseThread();
         mode_control_func_(temp);
     } else {
         return false;
@@ -234,7 +232,7 @@ bool Mqtt_imp::ParseArmedControl(const char *mess) {
         if (dom.HasMember("armed_control") && dom["armed_control"].IsInt()) {
             temp.armed_control = dom["armed_control"].GetInt();
         }
-
+		auto_cruise_->CloseAutoCruiseThread();
         armed_control_func_(temp);
         
       
@@ -246,7 +244,7 @@ bool Mqtt_imp::ParseArmedControl(const char *mess) {
 }
 
 bool Mqtt_imp::ParseHeartbeat(const char *mess) {
-    // ROS_INFO("Received heartbeat from HMI.");
+    ROS_INFO("Received heartbeat from HMI.");
     {
         std::lock_guard<std::mutex> lock(heartbeat_mutex_);
         heartbeat_reset_count_ = 0U;
@@ -256,7 +254,31 @@ bool Mqtt_imp::ParseHeartbeat(const char *mess) {
     return true;
 }
 
+bool Mqtt_imp::ParseAutoCruise(const char *mess) {
+    ROS_INFO("Received auto cruise");
+    auto_cruise_->StartAutoCruiseThread();
+    return true;
+}
 
+bool Mqtt_imp::DebugTargetValue(const char *mess) {
+    ROS_INFO("Received DebugTargetValue");
+	rapidjson::Document dom;
+	int type{0};
+	double value{0.0};
+    if (!dom.Parse(mess).HasParseError()) {
+        if (dom.HasMember("type") && dom["type"].IsInt()) {
+            type = dom["type"].GetInt();
+        }
+		if (dom.HasMember("value") && dom["value"].IsDouble()) {
+            value = dom["value"].GetDouble();
+        }
+		auto_cruise_->CloseAutoCruiseThread();       
+        debug_target_value_func_(type, value);
+    } else {
+        return false;
+    }
+    return true;
+}
 
 void Mqtt_imp::SetImuIfo(const ImuInfo& imu_info)
 {
@@ -265,6 +287,7 @@ void Mqtt_imp::SetImuIfo(const ImuInfo& imu_info)
 }
 
 void Mqtt_imp::SetState(const ModeStatus& status) {
+    
     rapidjson::StringBuffer buf_json;
     rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buf_json);
     {
@@ -278,23 +301,29 @@ void Mqtt_imp::SetState(const ModeStatus& status) {
         writer.Key("depth");
         writer.Double(mode_status_.depth);
         writer.EndObject();
+
     }
+    
     std::string result = buf_json.GetString();
     const char* topic = "MACH/ModeStatus";
-    ROS_INFO("motion:%d, armed:%d, depth:%f",status.motion_status, status.armed_status, status.depth);
+    // ROS_INFO("motion:%d, armed:%d, depth:%f",status.motion_status, status.armed_status, status.depth);
+    if (!connected_.load()) {
+        return;
+    }
     publish(nullptr, topic, result.size(), result.data());
 }
 
 void Mqtt_imp::SetRCOut(const std::vector<int>& data) {
+   
     rapidjson::StringBuffer buf_json;
     rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buf_json);
     writer.StartObject();
     writer.Key("motion_control");
     writer.StartArray();
-    ROS_INFO("-------------------------------");
+    // ROS_INFO("-------------------------------");
     for (const auto& value : data) {
         writer.Int(value);         
-        ROS_INFO("value:%d",value);
+        // ROS_INFO("value:%d",value);
     }
     writer.EndArray();
     {
@@ -309,10 +338,13 @@ void Mqtt_imp::SetRCOut(const std::vector<int>& data) {
     writer.EndObject();
     std::string result = buf_json.GetString();
     const char* topic="MACH/RCOut";
+    if (!connected_.load()) {
+        return;
+    }
     publish(nullptr,topic,result.size(),result.data());
 }
 
-void Mqtt_imp::SetBatteryState(const BatteryState& battery_status) {
+void Mqtt_imp::SetBatteryStatus(const BatteryStatus& battery_status) {
     rapidjson::StringBuffer buf_json;
     rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buf_json);
     {
@@ -329,6 +361,11 @@ void Mqtt_imp::SetBatteryState(const BatteryState& battery_status) {
     std::string result = buf_json.GetString();
     const char* topic = "MACH/BatteryStatus";
     publish(nullptr, topic, result.size(), result.data());
+}
+
+void Mqtt_imp::SetAutoCruisePtr(std::shared_ptr<rov_planning::AutoCruise>& ptr)
+{
+	auto_cruise_ = ptr;
 }
 
 }  // namespace MQTT

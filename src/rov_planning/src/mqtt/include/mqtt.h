@@ -40,14 +40,20 @@ extern "C" {
 #include <mutex>
 #include <functional>
 #include <vector>
+#include <memory>
 
 #include "planning_common.h"
+#include "auto_cruise.h"
 #include "mosquitto.h"
 #include "mosquittopp.h"
 #include "rapidjson/document.h"
 #include "rapidjson/prettywriter.h"
 #include "rapidjson/stringbuffer.h"
 #include "ros/ros.h" 
+
+namespace rov_planning {
+	class AutoCruise;
+}
 
 namespace MQTT {
 class Mqtt_imp : public mosqpp::mosquittopp {
@@ -56,7 +62,9 @@ public:
                        SPAD_RC_CONTROL,
                        SPAD_MODE_CONTROL,
                        SPAD_ARMED_CONTROL,
-                       SPAD_HEARTBEAT
+                       SPAD_HEARTBEAT,
+					   SPAD_AUTO_CRUISE,
+					   SPAD_DEBUG_TARGET_VALUE
                        };
 
 public:
@@ -69,10 +77,16 @@ public:
     void SetRCControlCallBack(const std::function<void(const RCControl&)>& cb);
     void SetModeControlCallBack(const std::function<void(const ModeControl&)>& cb);
     void SetArmedControlCallBack(const std::function<void(const ArmedControl&)>& cb);
+	void SetDebugTargetValueCallBack(const std::function<void(int, double)>& cb);
+	void SetMotionPlannerCallBack(const std::function<void(const RCControl&)>& cb);
+	
+	void SetAutoCruisePtr(std::shared_ptr<rov_planning::AutoCruise>&);
+	
+	
     void SetState(const ModeStatus& status);
     void SetRCOut(const std::vector<int>&);
     void SetImuIfo(const ImuInfo&);
-    void SetBatteryState(const BatteryState&);
+    void SetBatteryStatus(const BatteryStatus&);
 
     void on_connect(int rc);
     void on_disconnect(int rc);
@@ -87,13 +101,12 @@ private:
     bool ParseModeControl(const char *mess);
     bool ParseArmedControl(const char *mess);
     bool ParseHeartbeat(const char *mess);
-
-    void ConnectionMonitor();
-    void ConnectMqttBroker();
+	bool ParseAutoCruise(const char *mess);
+	bool DebugTargetValue(const char *mess);
 
 private:
     std::thread mqtt_thread_;
-    std::thread heartbeat_monitor_thread_;
+
     std::atomic<bool> closed_;
     std::mutex data_mutex_;
     std::mutex heartbeat_mutex_;
@@ -101,21 +114,24 @@ private:
     std::function<void(const RCControl&)> rc_control_func_ ;
     std::function<void(const ModeControl&)> mode_control_func_ ;
     std::function<void(const ArmedControl&)> armed_control_func_ ;
+	std::function<void(int, double)> debug_target_value_func_ ;
+	std::function<void(const RCControl&)> motion_planner_func_ ;
+	
+	std::shared_ptr<rov_planning::AutoCruise> auto_cruise_{nullptr};
 
     ModeStatus mode_status_{0};
     ImuInfo imu_info_{0};
-    BatteryState battery_status_{0};
+    BatteryStatus battery_status_{0};
 
     const char* WILL_MSG = "offline";
-    // const char* SERVER_IP = "192.168.137.200";
-    const char* SERVER_IP = "localhost";
+    const char* SERVER_IP = "192.168.137.200";
     const int PORT = 1883;
     const int KEEP_ALIVE = 60;
 
     // 心跳和重连相关成员变量
     std::atomic<bool> connected_;
     std::atomic<bool> pad_connected_;
-    int reconnect_attempts_;
+
     uint64_t heartbeat_reset_count_{0U};
     static const int MAX_RECONNECT_ATTEMPTS = 3;
     static const uint16_t HEART_BEAT_ADD_PERIOD = 500U;

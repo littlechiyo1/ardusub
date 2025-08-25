@@ -84,7 +84,7 @@ void UltrasonicSensorNode::ProcessSensorData() {
             uint8_t calculated_sum = (header + high + low) & 0xFF;
             if (calculated_sum == checksum) {
                 uint16_t distance = (high << 8) | low;
-                ROS_INFO_STREAM("distance: " << distance << " mm");
+                // ROS_INFO_STREAM("distance: " << distance << " mm");
 
                 std_msgs::UInt16 distance_msg;
                 distance_msg.data = distance;
