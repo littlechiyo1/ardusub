@@ -111,7 +111,7 @@ void  MotionPlanner::Process()
 	RCControl send;
     while (!closed_.load()) {
 		ros_com_->GetState(imu, status);
-		if (status.motion_status == MODE_MANUAL) {	  // MODE_ALT_HOLD
+		if (status.motion_status == MODE_ALT_HOLD) {	  // MODE_ALT_HOLD
 			current_value_.imu_info = imu;
 			current_value_.depth = status.depth;
 			std::lock_guard<std::mutex> lock(mutex_);
