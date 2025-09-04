@@ -5,7 +5,7 @@
  * \version 1.0
  * \date 2024-12-26
  *
- * \copyright Copyright (c) 2014-2024  阿尔特(北京)汽车数字科技有限公司
+ * \copyright Copyright (c) 2014-2024  阿尔�?北京)汽车数字科技有限公司
  *
  * Unpublished copyright. All rights reserved. This material contains
  * proprietary information that should be used or copied only within
@@ -22,6 +22,8 @@
 #ifndef COMMON_H
 #define COMMON_H
 #include <cstdint>
+#include <tf2/LinearMath/Quaternion.h>
+#include <tf2/LinearMath/Matrix3x3.h>
 
 typedef struct {
     double pitch;
@@ -60,6 +62,7 @@ typedef struct {
     double remaining;
 } BatteryStatus;
 
+
 typedef struct {
     struct {
         double x, y, z;
@@ -78,6 +81,57 @@ typedef struct {
 	double start_offset;
 	double stop_offset;
 } PIDParams;
+
+typedef struct{
+    float gather_total_voltage;     /// 采集总压 (V)
+    float cumulative_total_voltag;  // 累计电压
+    float current;   
+    float state_of_charge;   ///< 剩余电量 (SOC %)
+    bool has_fault;          
+    uint32_t fault_bits[2];  ///< 故障位码, fault_bits[0]为Byte0-3, fault_bits[1]为Byte4-7
+}BmsBasicInfo;
+
+// 地理坐标(经纬�?
+typedef struct {
+    double lat;
+    double lon;
+    double alt;
+} GeoPoint;
+
+//大地坐标
+typedef struct {
+    double x;
+    double y;
+    double z;
+} CartesianPoint;
+
+typedef struct  {
+	CartesianPoint position;       
+    tf2::Quaternion orientation;   // 姿态（四元数）
+    double vel_east = 0.0;            
+    double vel_north = 0.0;  
+    double vel_up = 0.0;  
+	
+    double vel_x = 0.0;            
+    double vel_y = 0.0;  
+    double vel_z = 0.0;          
+} RobotState;
+
+//IMU数据
+typedef struct {
+    double acc_x;    //x轴加速度
+    double acc_y;    //y轴加速度
+    double acc_z;    //z轴加速度
+    double gyro_x;   //x轴角速度
+    double gyro_y;   //y轴角速度
+    double gyro_z;   //z轴角速度
+} ImuData;
+
+//轨迹控制
+typedef struct {
+    GeoPoint geo_point;
+    CartesianPoint cartesian_point;
+} Waypoint;
 
 typedef enum {
     FORWARD_CONTROL = 1,
@@ -115,6 +169,12 @@ typedef enum {
     INTERNAL_MODE_MANUAL = 19,
     INTERNAL_MODE_ALT_HOLD = 2
 } InternalModeControlEnum;
+
+
+	
+
+
+
 
 
 

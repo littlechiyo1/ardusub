@@ -5,7 +5,7 @@
  * \version 1.0
  * \date 2023-12-25
  *
- * \copyright Copyright (c) 2014-2023  é˜¿å°”ç‰¹(åŒ—äº¬)æ±½è½¦æ•°å­—ç§‘æŠ€æœ‰é™å…¬å¸
+ * \copyright Copyright (c) 2014-2023  é˜¿å°”ç‰?åŒ—äº¬)æ±½è½¦æ•°å­—ç§‘æŠ€æœ‰é™å…¬å¸
  *
  * Unpublished copyright. All rights reserved. This material contains
  * proprietary information that should be used or copied only within
@@ -38,6 +38,11 @@
 #include "leakage_parser.h"
 #include "auto_cruise.h"
 #include "motion_planner.h"
+#include "bms_reader.h"
+#include "state_machine.h"
+#include "sethome.h"//
+#include "gps_postion.h"   // ĞÂÔö£º°üº¬GPSPositionÀàÍ·ÎÄ¼ş
+
 
 
 namespace rov_planning {
@@ -83,6 +88,10 @@ private:
     std::shared_ptr<LeakageParser> leakage_parser_{nullptr};
     std::shared_ptr<AutoCruise> auto_cruise_{nullptr};
 	std::shared_ptr<MotionPlanner> motion_planner_{nullptr};
+	std::shared_ptr<bms::DalyBmsReader> bms_reader_{nullptr};
+	std::shared_ptr<RovStateMachine> state_machine_;
+  std::unique_ptr<gps::SetHome> set_home_{nullptr};  // SetHomeÊµÀı
+  std::shared_ptr<gps::GPSPosition> gps_position_{nullptr};  // GPSÎ»ÖÃÊµÀı£¨¹©SetHomeÊ¹ÓÃ£©
 };
 
 }  // namespace rov_planning

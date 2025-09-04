@@ -1,0 +1,22 @@
+<launch>
+   
+    <node pkg="mapping_node" type="mapping_node_node" name="mapping_node" output="screen">    </node>
+     
+        <param name="distance_threshold" type="double" value="2.0" />
+        
+       
+        <param name="lower_error_threshold" type="double" value="1.5" /> 
+        <param name="upper_error_threshold" type="double" value="3.0" /> 
+
+        <param name="auto_save_path" type="string" value="/home/nvidia/catkin_ws2/src/raw_boundary.txt" />
+        
+     
+        <param name="filtered_output_path" type="string" value="/home/nvidia/catkin_ws2/src/filtered_boundary.txt" />
+     
+         <param name="load_geo_file_path" type="string" value="/home/nvidia/catkin_ws2/src/raw_boundary.txt" />
+
+         <param name="auto_collect_interval" type="double" value="2.0" />
+ 
+
+</launch>
+    

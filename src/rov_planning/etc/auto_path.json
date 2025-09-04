@@ -4,50 +4,20 @@
             "type_list":[
                 {
                     "type":"forward",
-                    "duty":1600
-                },
-                {
-                    "type":"throttle",
-                    "duty":1400
+                    "duty":1700
                 }
             ],
-            "time":8
+            "time":5
 
         },
         {
             "type_list":[
                 {
-                    "type":"yaw",
-                    "duty":1600
+                    "type":"forward",
+                    "duty":1300
                 }              
             ],
             "time":4
-        },
-		{
-            "type_list":[
-                {
-                    "type":"yaw",
-                    "duty":1450
-                },
-                {
-                    "type":"throttle",
-                    "duty":1600
-                }
-            ],
-            "time":6
-        },
-		{
-            "type_list":[
-                {
-                    "type":"yaw",
-                    "duty":1650
-                },
-                {
-                    "type":"throttle",
-                    "duty":1600
-                }
-            ],
-            "time":9
         }
     ]
 }

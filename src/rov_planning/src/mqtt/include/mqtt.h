@@ -50,6 +50,8 @@ extern "C" {
 #include "rapidjson/prettywriter.h"
 #include "rapidjson/stringbuffer.h"
 #include "ros/ros.h" 
+#include "bms_reader.h"
+#include "leakage_parser.h"
 
 namespace rov_planning {
 	class AutoCruise;
@@ -59,12 +61,14 @@ namespace MQTT {
 class Mqtt_imp : public mosqpp::mosquittopp {
 public:
     enum class Topic { NO_TOPIC,
-                       SPAD_RC_CONTROL,
-                       SPAD_MODE_CONTROL,
-                       SPAD_ARMED_CONTROL,
-                       SPAD_HEARTBEAT,
-					   SPAD_AUTO_CRUISE,
-					   SPAD_DEBUG_TARGET_VALUE
+						SPAD_RC_CONTROL,
+						SPAD_MODE_CONTROL,
+						SPAD_ARMED_CONTROL,
+						SPAD_HEARTBEAT,
+						SPAD_AUTO_CRUISE,
+						SPAD_DEBUG_TARGET_VALUE,
+						SPAD_SET_HOME,
+						SPAD_RETURN_TO_LAUNCH                          
                        };
 
 public:
@@ -79,9 +83,12 @@ public:
     void SetArmedControlCallBack(const std::function<void(const ArmedControl&)>& cb);
 	void SetDebugTargetValueCallBack(const std::function<void(int, double)>& cb);
 	void SetMotionPlannerCallBack(const std::function<void(const RCControl&)>& cb);
+  void SetHomeCallBack(const std::function<void()>& cb);
+	void SetReturnToLaunchCallBack(const std::function<void()>& cb);
 	
 	void SetAutoCruisePtr(std::shared_ptr<rov_planning::AutoCruise>&);
-	
+	void SetBmsReaderPtr(std::shared_ptr<bms::DalyBmsReader>&);
+	void SetLeakageParserPtr(std::shared_ptr<rov_planning::LeakageParser>&);
 	
     void SetState(const ModeStatus& status);
     void SetRCOut(const std::vector<int>&);
@@ -93,6 +100,13 @@ public:
     void on_publish(int rc);
     void on_subscribe(int mid, int qos_count, const int *granted_qos);
     void on_message(const struct mosquitto_message *message);
+    int GetConnectCounter() const { return connect_counter_.load(); }
+    bool IsConnected() const { return connected_.load(); }
+    void GetBmsBasicInfo(BmsBasicInfo& info) const {
+        if (bms_reader_) {
+            bms_reader_->GetBmsInfo(info);
+        }
+    }
 
 private:
     Mqtt_imp(const char *id);
@@ -103,6 +117,8 @@ private:
     bool ParseHeartbeat(const char *mess);
 	bool ParseAutoCruise(const char *mess);
 	bool DebugTargetValue(const char *mess);
+    bool ParseSetHome(const char *mess);
+    bool ParseReturnToLaunch(const char *mess);
 
 private:
     std::thread mqtt_thread_;
@@ -114,10 +130,14 @@ private:
     std::function<void(const RCControl&)> rc_control_func_ ;
     std::function<void(const ModeControl&)> mode_control_func_ ;
     std::function<void(const ArmedControl&)> armed_control_func_ ;
-	std::function<void(int, double)> debug_target_value_func_ ;
-	std::function<void(const RCControl&)> motion_planner_func_ ;
-	
+	  std::function<void(int, double)> debug_target_value_func_ ;
+	  std::function<void(const RCControl&)> motion_planner_func_ ;
+    std::function<void()> set_home_func_ ;
+    std::function<void()> return_to_launch_func_ ;
+ 
 	std::shared_ptr<rov_planning::AutoCruise> auto_cruise_{nullptr};
+	std::shared_ptr<bms::DalyBmsReader> bms_reader_{nullptr};
+	std::shared_ptr<rov_planning::LeakageParser> leakage_parser_{nullptr};
 
     ModeStatus mode_status_{0};
     ImuInfo imu_info_{0};
@@ -131,6 +151,9 @@ private:
     // 心跳和重连相关成员变量
     std::atomic<bool> connected_;
     std::atomic<bool> pad_connected_;
+    
+    //mqtt连接计数器
+    std::atomic<int> connect_counter_;
 
     uint64_t heartbeat_reset_count_{0U};
     static const int MAX_RECONNECT_ATTEMPTS = 3;

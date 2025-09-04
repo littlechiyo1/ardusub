@@ -19,12 +19,16 @@ void RosCom::Init()
     ultrasonic_sensor_sub_ = nh_.subscribe("mavros/sensor/distance", 1000, &RosCom::UltrasonicCallBack, this);
     battery_status_sub_ = nh_.subscribe("/mavros/battery", 1000, &RosCom::BatteryStatusCallBack, this);
     twist_sub_ = nh_.subscribe("/mavros/local_position/velocity_body", 1000, &RosCom::TwistCallBack, this);
+	compass_hdg_sub_ = nh_.subscribe("/mavros/global_position/compass_hdg", 1000, &RosCom::CompassHdgCallBack, this);
+	imu_odom_sub_ = nh_.subscribe("location/imu_odometry", 1000, &RosCom::ImuOdomCallback, this);
+
 	GetRosParam();
-    
+
     const int neutral_duty = 1500;
     for (int i = 0 ; i < RC_OUT_VEC_SIZE; i++) {
         rc_out_vec_.emplace_back(neutral_duty);
     }
+
     RCControl surface_depth_msg{g_surface_depth_, SURFACE_DEPTH};
     RCControlCallBack(surface_depth_msg); 
 
@@ -36,6 +40,7 @@ void RosCom::Init()
 
     RCControl rear_pitch_fix_msg{g_rear_pitch_fix_,REAR_PITCH_FIX};
     RCControlCallBack(rear_pitch_fix_msg);
+
 }
 
 void RosCom::StateCallBack(const mavros_msgs::State::ConstPtr& msg) 
@@ -91,7 +96,8 @@ void RosCom::RCControlCallBack(const RCControl& send)
 		// set_mode_client_.call(srv);		
     } else if (send.rc_in >= FORWARD_CONTROL && send.rc_in <= REAR_PITCH_FIX) {
         srv.request.base_mode = CONTROL_TYPE + send.rc_in;
-        ROS_INFO("type:%d, duty:%f",send.rc_in,send.rc_control_value);
+        //ROS_INFO("type:%d, duty:%f",send.rc_in,send.rc_control_value);
+		
         srv.request.custom_mode = SetChannels(send);
 		set_mode_client_.call(srv);
     } else {
@@ -107,22 +113,29 @@ void RosCom::AltitudeCallBack(const std_msgs::Float64::ConstPtr& msg)
 }
 
 void RosCom::ImuInfoCallBack(const sensor_msgs::Imu::ConstPtr& msg) 
-{
+{	
+	
+    // 2. 解析IMU姿态和加速度
     tf2::Quaternion q(
         msg->orientation.x,
         msg->orientation.y,
         msg->orientation.z,
         msg->orientation.w
     );
-    tf2::Matrix3x3 m(q);
+    
+
+	tf2::Matrix3x3 m(q);
 	{
-		std::lock_guard<std::mutex> lock(mutex_);
+		//std::lock_guard<std::mutex> lock(mutex_);
 		m.getRPY(imu_.roll, imu_.pitch, imu_.yaw);
 		imu_.roll *= RADIAN_TO_ANGLE;
 		imu_.pitch *= RADIAN_TO_ANGLE;
 		imu_.yaw *= RADIAN_TO_ANGLE;
 		MQTT::Mqtt_imp::get_single().SetImuIfo(imu_);
 	}
+	
+	// ROS_INFO("roll:%f, pitch:%f, yaw: %f",imu_.roll, imu_.pitch, imu_.yaw);   
+	
 }
 
 void RosCom::BatteryStatusCallBack(const mavros_msgs::BatteryStatus::ConstPtr& msg) const
@@ -137,7 +150,7 @@ void RosCom::BatteryStatusCallBack(const mavros_msgs::BatteryStatus::ConstPtr& m
 
 void RosCom::TwistCallBack(const geometry_msgs::TwistStamped::ConstPtr& msg)
 {
-    ROS_INFO("Linear:x: %f", msg->twist.linear.x);
+    ROS_INFO("Linear:x: %f, y: %f, z: %f", msg->twist.linear.x, msg->twist.linear.y, msg->twist.linear.z);
 }
 
 void RosCom::UltrasonicCallBack(const std_msgs::UInt16::ConstPtr& msg)
@@ -200,9 +213,15 @@ void RosCom::GetPIDParams(std::vector<PIDParams>& vec) const
 
 void RosCom::GetState(ImuInfo& imu, ModeStatus& status) const
 {
-	std::lock_guard<std::mutex> lock(mutex_);
+	//std::lock_guard<std::mutex> lock(mutex_);
 	imu = imu_;
 	status = mode_status_;
+}
+
+void RosCom::GetRobotState(RobotState& state) const
+{
+	std::lock_guard<std::mutex> lock(mutex_);
+	state = current_state_;
 }
 
 void RosCom::GetRosParam()
@@ -248,6 +267,32 @@ bool RosCom::GetPIDSwitch()
 	bool pid_switch = false;
 	nh_.getParam("pid_switch", pid_switch);
 	return pid_switch;
+}
+
+void RosCom::GetCurrentPos(CartesianPoint& pos) const
+{
+    std::lock_guard<std::mutex> lock(pos_mutex_);
+    pos = current_pos_;
+}
+
+double RosCom::GetCompassData() const
+{
+	return compass_data_;
+}
+
+
+void RosCom::CompassHdgCallBack(const std_msgs::Float64::ConstPtr& msg)
+{
+	//ROS_INFO("data:%f",msg->data);
+   compass_data_ = msg->data;
+}
+
+void RosCom::ImuOdomCallback(const nav_msgs::Odometry::ConstPtr &msg){
+        std::lock_guard<std::mutex> lock(pos_mutex_);
+
+        current_pos_.x = msg->pose.pose.position.x;
+        current_pos_.y = msg->pose.pose.position.y;
+        current_pos_.z = msg->pose.pose.position.z; 
 }
 
 }  // namespace rov_planning

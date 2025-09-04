@@ -140,7 +140,7 @@ void AutoCruise::RunAutoCruise()
         /* Blocks the execution of the current thread until specified point of time (next_run) has been reached */
         std::this_thread::sleep_until(next_run);
         counter++;
-		ROS_INFO("current_couter: %d", counter);
+		ROS_INFO("current_couter: %ld", counter);
         
         // 是否新路径段的开始
         if (current_segment_index < path_segments_.size() && 

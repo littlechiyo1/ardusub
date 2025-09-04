@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<package format="2">
+  <!-- 1. 基础信息：补全占位符，确保与CMakeLists.txt的project()名称一致 -->
+  <name>mapping_node</name>  <!-- 若CMakeLists.txt的project()是rov_planning，此处无需修改；若之前是mapping_node，需统一 -->
+  <version>1.0.0</version>   <!-- 补全版本号（如1.0.0），避免占位符0.0.0 -->
+  <description>The mapping_node package</description>  <!-- 补全功能描述 -->
+
+  <!-- 维护者信息：补全实际邮箱（便于协作） -->
+  <maintainer email="nano@todo.todo">nano</maintainer>
+
+  <!-- 许可证：补全实际许可证（如Apache-2.0、MIT，避免TODO） -->
+  <license>Apache-2.0</license>
+
+  <!-- 2. 构建工具依赖：必须依赖catkin -->
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- 3. 编译依赖：编译时必须存在的包（对应CMakeLists.txt的find_package） -->
+  <build_depend>roscpp</build_depend>          <!-- 核心：C++ ROS库（替换无用的rospy） -->
+  <build_depend>std_msgs</build_depend>        <!-- 基础消息类型（保留） -->
+  <build_depend>std_srvs</build_depend>        <!-- 新增：用于std_srvs/Trigger服务（启动/停止采集） -->
+  <build_depend>sensor_msgs</build_depend>     <!-- 新增：用于GPS消息sensor_msgs/NavSatFix -->
+  <build_depend>nav_msgs</build_depend>        <!-- 新增：用于路径消息nav_msgs/Path（可视化） -->
+  <build_depend>geometry_msgs</build_depend>   <!-- 新增：用于位姿消息geometry_msgs/PoseStamped（Path依赖） -->
+  <build_depend>geographiclib</build_depend>   <!-- 新增：用于坐标转换（GeographicLib库） -->
+  <build_depend>mavros_msgs</build_depend>     <!-- 保留：若项目需与MAVLink设备通信（如ROV控制） -->
+  <build_depend>tf2</build_depend>
+   <build_depend>tf2_ros</build_depend>
+
+  <!-- 4. 导出依赖：其他包编译时依赖当前包需用到的库（与编译依赖一致，确保兼容性） -->
+  <build_export_depend>roscpp</build_export_depend>
+  <build_export_depend>std_msgs</build_export_depend>
+  <build_export_depend>std_srvs</build_export_depend>
+  <build_export_depend>sensor_msgs</build_export_depend>
+  <build_export_depend>nav_msgs</build_export_depend>
+  <build_export_depend>geometry_msgs</build_export_depend>
+  <build_export_depend>geographiclib</build_export_depend>
+  <build_export_depend>mavros_msgs</build_export_depend>
+  <build_export_depend>tf2</build_export_depend>
+  <build_export_depend>tf2_ros</build_export_depend>
+
+  <!-- 5. 运行依赖：运行时必须存在的包（与编译依赖一致，避免运行时缺失库） -->
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>std_srvs</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>nav_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>geographiclib</exec_depend>
+  <exec_depend>mavros_msgs</exec_depend>
+  <exec_depend>tf2</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+
+
+  <!-- 6. 导出配置（默认catkin构建类型） -->
+  <export>
+    <build_type>catkin</build_type>
+  </export>
+</package>

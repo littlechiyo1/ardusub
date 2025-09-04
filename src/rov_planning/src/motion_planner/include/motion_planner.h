@@ -41,6 +41,22 @@ public:
 	
 private:
 	void Process();
+	void RunRollControlPID(double period);
+	void RunPitchControlPID(double period);
+	void RunYawControlPID(double period, double);
+	void RunDepthControlPID(double period, double);
+	static inline void ResetByLimit(double& in)
+	{
+		const double lim1 = 180.0;
+		const double lim2 = lim1 *2.0;
+		if (in > lim1) {
+			in -= lim2;
+		} else if (in < -lim1) {
+			in += lim2;
+		} else {
+		}
+	}
+	
 	std::atomic<bool> closed_;
 	std::atomic<bool> yaw_switch_;
 	std::atomic<bool> depth_switch_;

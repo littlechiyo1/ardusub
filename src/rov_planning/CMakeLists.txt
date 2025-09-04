@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   roscpp
   mavros_msgs
+  location
 )
 
 ## System dependencies are found with CMake's conventions
@@ -105,7 +106,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES rov_planning
-  CATKIN_DEPENDS rospy std_msgs mavros_msgs
+  CATKIN_DEPENDS rospy std_msgs mavros_msgs location
 #  DEPENDS system_lib
 )
 
@@ -127,6 +128,11 @@ include_directories(
   src/leakage/include
   src/path_planner/include
   src/motion_planner/include
+  src/battery/include
+  src/location/include
+  src/homechecker/include
+  src/return_to_launch/include
+  src/state_machine/include
   /home/nvidia/catkin_ws/src/geometry2/tf2/include
 )
 
@@ -168,6 +174,7 @@ src/*.cpp
    ${CMAKE_CURRENT_SOURCE_DIR}/lib/openssl_install/lib64/libcrypto.so.3
    ${CMAKE_CURRENT_SOURCE_DIR}/lib/openssl_install/lib64/libssl.so.3
    ${CMAKE_CURRENT_SOURCE_DIR}/lib/jetson_arm/libJetsonGPIO.a
+   ${CMAKE_CURRENT_SOURCE_DIR}/lib/GeographicLib/lib/libGeographic.so
  )
 
 #############

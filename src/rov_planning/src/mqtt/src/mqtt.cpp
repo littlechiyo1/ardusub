@@ -6,7 +6,6 @@
  * @date 2022-04-07
  *
  * @copyright Copyright (c) 2022  阿尔特汽车技术股份有限公司
- *
  * Unpublished copyright. All rights reserved. This material contains
  * proprietary information that should be used or copied only within
  * IAT, except with written permission of IAT.
@@ -37,14 +36,15 @@ Mqtt_imp::~Mqtt_imp() { stop(); }
 bool Mqtt_imp::init() {
     // 设置MQTT遗言消息
     will_set(WILL_MSG);
-    // 设置订阅消息的主题
-    string_topic_map_["SPAD/ModeControl"] = Topic::SPAD_MODE_CONTROL;
+    // 设置订阅消息    
+	string_topic_map_["SPAD/ModeControl"] = Topic::SPAD_MODE_CONTROL;
     string_topic_map_["SPAD/RCControl"] = Topic::SPAD_RC_CONTROL;
     string_topic_map_["SPAD/ArmedControl"] = Topic::SPAD_ARMED_CONTROL;
     string_topic_map_["SPAD/Heartbeat"] = Topic::SPAD_HEARTBEAT;
   	string_topic_map_["SPAD/AutoCruise"] = Topic::SPAD_AUTO_CRUISE;
   	string_topic_map_["SPAD/DebugTargetValue"] = Topic::SPAD_DEBUG_TARGET_VALUE;
-	
+  	string_topic_map_["SPAD/SetHome"] = Topic::SPAD_SET_HOME;
+	string_topic_map_["SPAD/ReturnToLaunch"] = Topic::SPAD_RETURN_TO_LAUNCH;
     return true;
 }
 
@@ -68,14 +68,17 @@ void Mqtt_imp::stop() {
 void Mqtt_imp::on_connect(int rc) 
 { 
     if (rc == 0) {
-      std::cout << "Broker connected! " << std::endl;
-      connected_.store(true);
-      subscribe(nullptr, "SPAD/RCControl");
-      subscribe(nullptr, "SPAD/ModeControl");
-      subscribe(nullptr, "SPAD/ArmedControl");
-      subscribe(nullptr, "SPAD/Heartbeat");
-	  subscribe(nullptr, "SPAD/AutoCruise");
-	  subscribe(nullptr, "SPAD/DebugTargetValue");
+		std::cout << "Broker connected! " << std::endl;
+		connected_.store(true);
+		subscribe(nullptr, "SPAD/RCControl");
+		subscribe(nullptr, "SPAD/ModeControl");
+		subscribe(nullptr, "SPAD/ArmedControl");
+		//subscribe(nullptr, "SPAD/Heartbeat");
+		subscribe(nullptr, "SPAD/AutoCruise");
+		subscribe(nullptr, "SPAD/DebugTargetValue");
+		subscribe(nullptr, "SPAD/SetHome");
+		subscribe(nullptr, "SPAD/ReturnToLaunch");
+     
     } else {
         std::cerr << "Connect failed: " << mosqpp::connack_string(rc) << std::endl;
     }
@@ -119,6 +122,16 @@ void Mqtt_imp::SetMotionPlannerCallBack(const std::function<void(const RCControl
     motion_planner_func_ = cb;
 }
 
+void Mqtt_imp::SetHomeCallBack(const std::function<void()>& cb)
+{
+    set_home_func_ = cb;
+}
+
+void Mqtt_imp::SetReturnToLaunchCallBack(const std::function<void()>& cb)
+{
+    return_to_launch_func_ = cb;
+}
+
 void Mqtt_imp::on_message(const struct mosquitto_message *message) {
     bool res = false;
     Topic topic = Topic::NO_TOPIC;
@@ -129,8 +142,9 @@ void Mqtt_imp::on_message(const struct mosquitto_message *message) {
             break;
         }
     }
-	 std::cout << (const char *)message->topic << std::endl;
-     std::cout << (const char *)message->payload << std::endl;
+	std::cout << "--------------------------------------" << std::endl;
+	std::cout << (const char *)message->topic << std::endl;
+    std::cout << (const char *)message->payload << std::endl;
     switch (topic) {
         case Topic::SPAD_RC_CONTROL: {
             ParseRCControl(static_cast<const char *>(message->payload));
@@ -156,6 +170,14 @@ void Mqtt_imp::on_message(const struct mosquitto_message *message) {
             DebugTargetValue(static_cast<const char *>(message->payload));
             break;
         }
+		case Topic::SPAD_SET_HOME: {            
+			ParseSetHome(static_cast<const char *>(message->payload));
+			break;
+			}
+		case Topic::SPAD_RETURN_TO_LAUNCH: {            
+			ParseReturnToLaunch(static_cast<const char *>(message->payload));
+			break;
+        }
         default:
             break;
     }
@@ -179,6 +201,34 @@ void Mqtt_imp::process() {
                 pad_connected_.store(false);
             }
         }
+        if (connected_.load()) {
+            // true说明连接上，counter清0
+            if (connect_counter_.load() > 0) {
+                connect_counter_.store(0);
+                std::cout << "MQTT connected. Counter reset to 0." << std::endl;
+            }
+        } else {
+            // false说明断开，counter加1（不超过上限21）
+            int current_count = connect_counter_.load();
+            if (current_count < 21) {
+                int new_count = current_count + 1;
+                connect_counter_.store(new_count);
+                
+                std::cout << "MQTT disconnected. Attempt: " << new_count << "/21" << std::endl;
+                
+                // 根据计数器值输出不同级别的日志
+                if (new_count >= 10) {
+                    ROS_WARN("MQTT connection failed %d times", new_count);
+                }
+                if (new_count >= 20) {
+                    ROS_ERROR("MQTT connection critically failed %d times! Maximum attempts nearly reached.", new_count);
+                }
+            } else {
+                // 达到上限21
+                ROS_ERROR("MQTT connection failed 21 times. Maximum attempts reached.");
+                // 可以在这里添加达到上限后的处理逻辑
+            }
+        }
         
         /* Blocks the execution of the current thread until specified point of time (next_run) has been reached */
         std::this_thread::sleep_for(period);
@@ -195,8 +245,8 @@ bool Mqtt_imp::ParseRCControl(const char *mess) {
         if (dom.HasMember("rc_in") && dom["rc_in"].IsInt()) {
             temp.rc_in = dom["rc_in"].GetInt();
         }
-        if (dom.HasMember("rc_control_value") && dom["rc_control_value"].IsDouble()) {
-            temp.rc_control_value = dom["rc_control_value"].GetDouble();
+        if (dom.HasMember("rc_control_value") && dom["rc_control_value"].IsString()) {
+            temp.rc_control_value = std::stod(dom["rc_control_value"].GetString());
         }
 		auto_cruise_->CloseAutoCruiseThread();
 		motion_planner_func_(temp);
@@ -280,6 +330,19 @@ bool Mqtt_imp::DebugTargetValue(const char *mess) {
     return true;
 }
 
+/*bool Mqtt_imp::ParseSetHome(const char *mess) {
+  // set_home_func_();
+}*/
+
+bool Mqtt_imp::ParseSetHome(const char* mess) {
+        set_home_func_();
+}
+
+
+bool Mqtt_imp::ParseReturnToLaunch(const char *mess) {
+  // return_to_launch_func_();
+}
+
 void Mqtt_imp::SetImuIfo(const ImuInfo& imu_info)
 {
     std::lock_guard<std::mutex> lock(data_mutex_);
@@ -290,19 +353,28 @@ void Mqtt_imp::SetState(const ModeStatus& status) {
     
     rapidjson::StringBuffer buf_json;
     rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buf_json);
-    {
-        std::lock_guard<std::mutex> lock(data_mutex_);
-        mode_status_ = status;
-        writer.StartObject();
-        writer.Key("motion_status");
-        writer.Int(mode_status_.motion_status);
-        writer.Key("armed_status");
-        writer.Int(mode_status_.armed_status);
-        writer.Key("depth");
-        writer.Double(mode_status_.depth);
-        writer.EndObject();
+  
+	mode_status_ = status;
+	writer.StartObject();
+	writer.Key("motion_status");
+	writer.Int(mode_status_.motion_status);
+	writer.Key("armed_status");
+	writer.Int(mode_status_.armed_status);
+	writer.Key("depth");
+	writer.Double(mode_status_.depth);
+	
 
-    }
+	writer.Key("leakage_status");
+	writer.Int(leakage_parser_->GetLeakageStatus());
+	
+	BmsBasicInfo battery_info;
+	bms_reader_->GetBmsInfo(battery_info);
+	writer.Key("voltage");
+	writer.Double(battery_info.gather_total_voltage);
+	writer.Key("charge");
+	writer.Double(battery_info.state_of_charge);
+	writer.EndObject();
+	
     
     std::string result = buf_json.GetString();
     const char* topic = "MACH/ModeStatus";
@@ -366,6 +438,16 @@ void Mqtt_imp::SetBatteryStatus(const BatteryStatus& battery_status) {
 void Mqtt_imp::SetAutoCruisePtr(std::shared_ptr<rov_planning::AutoCruise>& ptr)
 {
 	auto_cruise_ = ptr;
+}
+
+void Mqtt_imp::SetBmsReaderPtr(std::shared_ptr<bms::DalyBmsReader>& ptr)
+{
+	bms_reader_ = ptr;
+}
+
+void Mqtt_imp::SetLeakageParserPtr(std::shared_ptr<rov_planning::LeakageParser>& ptr)
+{
+	leakage_parser_ = ptr;
 }
 
 }  // namespace MQTT
